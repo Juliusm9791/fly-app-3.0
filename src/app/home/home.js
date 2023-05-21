@@ -1,8 +1,6 @@
 // HOME PAGE
 "use client";
 import React, { useState, useEffect } from "react";
-import Nav from "../components/nav/nav.js";
-import Footer from "../components/footer/footer.js";
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -17,10 +15,8 @@ export default function Home() {
 
   return (
     <main className="flex-row">
-      <Nav />
       <h1 className="text-4xl lg:text-6xl">MAIN CONTENT</h1>
       <p>{name.appName}</p>
-      <Footer />
     </main>
   );
 }

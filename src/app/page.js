@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Home from "./home/page.js";
+import Home from "./home/home.js";
 
 export default function Main() {
   return (

@@ -25,3 +25,23 @@
     )
     rgb(var(--background-start-rgb));
 } */
+
+#smallNav:hover ~ #fullNav {
+  visibility: visible;
+}
+
+#smallNav {
+  visibility: visible;
+}
+
+#smallNav:hover {
+  visibility: hidden;
+}
+
+#fullNav {
+  visibility: hidden;
+}
+
+#fullNav:hover {
+  visibility: visible;
+}

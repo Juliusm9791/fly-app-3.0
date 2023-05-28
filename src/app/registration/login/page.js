@@ -47,7 +47,7 @@ function Login() {
           </form>
 
           <h5>
-            Don't have an account? Click
+            Don&apos;t have an account? Click
             <Link href="/registration/signup"> here </Link>
             to sign up
           </h5>

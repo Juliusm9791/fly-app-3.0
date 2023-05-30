@@ -2,7 +2,6 @@ import NextAuth from "next-auth/next";
 import CognitoProvider from "next-auth/providers/cognito";
 
 export const authOptions = {
-  // Configure one or more authentication providers
   providers: [
     CognitoProvider({
       clientId: process.env.COGNITO_CLIENT_ID,
@@ -12,8 +11,8 @@ export const authOptions = {
   ],
   theme: {
     colorScheme: "dark", // "auto" | "dark" | "light"
-    brandColor: "#000", // Hex color code
-    buttonText: "#fff", // Hex color code
+    brandColor: "", // Hex color value
+    logo: "https://fly--app.herokuapp.com/static/media/fly_logo.83b6d1ef686379a9764d.png", // Absolute URL to logo image
   },
 };
 export default NextAuth(authOptions);

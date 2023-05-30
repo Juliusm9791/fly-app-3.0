@@ -14,7 +14,7 @@ export const metadata = {
     icon: "/flyapp.png",
   },
 };
-
+//refetchInterval={5 * 60}
 export default function RootLayout({ children, session }) {
   return (
     <html lang="en">

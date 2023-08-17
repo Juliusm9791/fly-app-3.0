@@ -16,8 +16,8 @@ export default function Home() {
   return (
     <main className="flex-row">
       <div className="text-center">
-        <h1 className="text-4xl lg:text-6xl">MAIN CONTENT</h1>
-        <p>{name.appName}</p>
+        <h1 className="text-4xl lg:text-6xl">FLY APP 3.0</h1>
+        {/* <p>{name.appName}</p> */}
       </div>
     </main>
   );

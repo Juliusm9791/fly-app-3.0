@@ -7,13 +7,13 @@ import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Fly App",
-  description: "...",
-  icons: {
-    icon: "/flyapp.png",
-  },
-};
+// export const metadata = {
+//   title: "Fly App",
+//   description: "...",
+//   icons: {
+//     icon: "/flyapp.png",
+//   },
+// };
 //refetchInterval={5 * 60}
 export default function RootLayout({ children, session }) {
   return (

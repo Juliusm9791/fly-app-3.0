@@ -1,9 +1,9 @@
 // HOME PAGE
 "use client";
 import React, { useState, useEffect } from "react";
-import TextField from "@/common/input";
+import InputForm from "@/common/input/input-form";
 
-export default function Home() {
+export default function HomePage() {
   const [name, setName] = useState("");
   useEffect(() => {
     (async function () {
@@ -22,13 +22,14 @@ export default function Home() {
         {/* <p>{name.appName}</p> */}
       </div>
       <div>
-        <TextField
+        <InputForm
+          label="test"
           name="email"
           type="email"
           value=""
           onChange={handleChange}
           placeholder="email"
-        ></TextField>
+        ></InputForm>
       </div>
     </main>
   );

@@ -21,13 +21,13 @@ export default function Nav() {
           href="#"
         >
           <svg
-            class="h-8 w-8 text-white"
+            className="h-8 w-8 text-white"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
             {" "}
             <circle cx="11" cy="11" r="8" />{" "}
@@ -41,15 +41,15 @@ export default function Nav() {
           href="#"
         >
           <svg
-            class="h-8 w-8 text-white"
+            className="h-8 w-8 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
@@ -61,15 +61,15 @@ export default function Nav() {
           href="#"
         >
           <svg
-            class="h-8 w-8 text-white"
+            className="h-8 w-8 text-white"
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            stroke-width="2"
+            strokeWidth="2"
             stroke="currentColor"
             fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
             {" "}
             <path stroke="none" d="M0 0h24v24H0z" />{" "}
@@ -84,15 +84,15 @@ export default function Nav() {
           href="#"
         >
           <svg
-            class="h-8 w-8 text-white"
+            className="h-8 w-8 text-white"
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            stroke-width="2"
+            strokeWidth="2"
             stroke="currentColor"
             fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
             {" "}
             <path stroke="none" d="M0 0h24v24H0z" />{" "}
@@ -110,15 +110,15 @@ export default function Nav() {
           href="#"
         >
           <svg
-            class="h-8 w-8 text-white"
+            className="h-8 w-8 text-white"
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            stroke-width="2"
+            strokeWidth="2"
             stroke="currentColor"
             fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
             {" "}
             <path stroke="none" d="M0 0h24v24H0z" />{" "}

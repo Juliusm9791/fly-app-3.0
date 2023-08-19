@@ -4,22 +4,14 @@ export default function Nav() {
   return (
     <nav
       id="fullNav"
-      className="absolute top-0 flex flex-col items-center w-16 hover:w-40 h-full overflow-hidden text-gray-400 bg-gray-900 z-20 pl-1"
+      className="absolute top-0 flex flex-col items-center w-16 hover:w-40 h-full overflow-hidden text-white bg-gray-900 z-20 pl-1"
     >
-      <Link className="flex items-center w-full px-3 mt-4 mb-2" href="#">
-        <svg
-          class="h-8 w-8 text-white"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          {" "}
-          <path stroke="none" d="M0 0h24v24H0z" />{" "}
-          <path d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2 -7h-4l-2 2h-3l2-4l-2 -4h3l2 2h4l-2 -7h3z" />
-        </svg>
+      <Link className="flex items-center w-full px-3 mt-6" href="#">
+        <img
+          className="mb-4 w-full"
+          src="/icons/fly_icon.svg"
+          alt="flyapp_logo"
+        />
         <span className="ml-2 text-sm font-medium hidden">Fly App</span>
       </Link>
 

@@ -1,36 +1,37 @@
-// HOME PAGE
-"use client";
-import React, { useState, useEffect } from "react";
-import InputForm from "@/common/input/input-form";
+'use client';
+import React, { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+
+interface Hello {
+  appName: String;
+}
 
 export default function HomePage() {
-  const [name, setName] = useState("");
+  const [name, setName] = useState<Hello>({ appName: '' });
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     (async function () {
-      const response = await fetch("/api/hello");
-      const data = await response.json();
-      console.log(data);
-      setName(data);
+      try {
+        const response = await fetch('/api/hello');
+        const data = await response.json();
+        setLoading(false);
+        setName(data);
+      } catch (e) {
+        console.error('Fetch hello error: ' + e);
+      }
     })();
   }, []);
-  const handleChange = () => {};
 
   return (
-    <main className="flex-row">
+    <main>
       <div className="text-center">
         <h1 className="text-4xl lg:text-6xl">FLY APP 3.0</h1>
-        {/* <p>{name.appName}</p> */}
+        {loading ? <p>Loading ...</p> : <p>{name.appName}</p>}
       </div>
-      <div>
-        <InputForm
-          label="test"
-          name="email"
-          type="email"
-          value=""
-          onChange={handleChange}
-          placeholder="email"
-        ></InputForm>
-      </div>
+      <Link className="" href="/auth/login">
+        LogIn
+      </Link>
     </main>
   );
 }

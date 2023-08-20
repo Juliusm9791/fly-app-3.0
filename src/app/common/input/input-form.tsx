@@ -1,7 +1,8 @@
-import React from "react";
-import TextField from "./text-field";
+'use client';
+import React from 'react';
+import TextField from './text-field';
 
-interface FormInputProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+interface Props {
   label?: string;
   type?: string;
   value: string;
@@ -17,10 +18,9 @@ export default function InputForm({
   placeholder,
   name,
   onChange,
-  ...props
-}: FormInputProps) {
+}: Props) {
   return (
-    <label className="block" {...props}>
+    <label className="block">
       <p className="text-gray-700 text-left ">{label}</p>
       <TextField
         value={value}

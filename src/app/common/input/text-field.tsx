@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export type TextFieldProps = {
+export type Props = {
   value: string;
   name?: string;
   type?: string;
@@ -14,8 +14,8 @@ export default function TextField({
   type,
   placeholder,
   onChange,
-}: TextFieldProps) {
-  const hInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+}: Props) {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const name = event.target.name;
     onChange(value, name);
@@ -25,14 +25,11 @@ export default function TextField({
     <div>
       <input
         name={name}
-        type={type || "text"}
+        type={type || 'text'}
         value={value}
-        onChange={hInputChange}
+        onChange={handleInputChange}
         placeholder={placeholder}
-        className="
-          mt-1 block w-full rounded-md border-gray-300 
-          shadow-sm focus:border-indigo-300 focus:ring 
-          focus:ring-indigo-200 focus:ring-opacity-50"
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
       />
     </div>
   );

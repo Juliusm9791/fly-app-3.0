@@ -32,8 +32,16 @@ const config: Config = {
         '2xl': '1536px',
         // => @media (min-width: 1536px) { ... }
       },
+      fontFamily: {
+        sans: ['SF Pro Text'],
+        serif: ['ui-serif', 'Georgia'],
+        mono: ['ui-monospace', 'SFMono-Regular'],
+      },
+      dropShadow: {
+        near: '1px 1px 3px rgba(40, 40, 40, 0.2)',
+      },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };
 export default config;

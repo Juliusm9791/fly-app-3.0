@@ -1,6 +1,6 @@
 'use client';
-import ButtonCommon from '@/app/common/input/button';
-import InputForm from '@/app/common/input/input-form';
+import ButtonCommon from '@/common/input/button';
+import InputForm from '@/common/input/input-form';
 import React, { useCallback, useState } from 'react';
 
 export default function LoginPage() {
@@ -14,25 +14,31 @@ export default function LoginPage() {
   }, []);
   console.log(inputForm);
 
+  const handleSubmit = () => {
+    console.log('submit');
+  };
+
   return (
-    <form>
-      <InputForm
-        label="E-mail"
-        name="email"
-        type="email"
-        value={inputForm.email}
-        onChange={handleInputFormChange}
-        placeholder="email"
-      ></InputForm>
-      <InputForm
-        label="Password"
-        name="password"
-        type="password"
-        value={inputForm.password}
-        onChange={handleInputFormChange}
-        placeholder="password"
-      ></InputForm>
-      <ButtonCommon label="Submit" />
-    </form>
+    <>
+      <form>
+        <InputForm
+          label="E-mail"
+          name="email"
+          type="email"
+          value={inputForm.email}
+          onChange={handleInputFormChange}
+          placeholder="email"
+        ></InputForm>
+        <InputForm
+          label="Password"
+          name="password"
+          type="password"
+          value={inputForm.password}
+          onChange={handleInputFormChange}
+          placeholder="password"
+        ></InputForm>
+      </form>
+      <ButtonCommon label="Submit" onButtonClick={handleSubmit} />
+    </>
   );
 }

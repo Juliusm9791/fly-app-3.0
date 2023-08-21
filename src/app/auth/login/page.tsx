@@ -3,16 +3,24 @@ import ButtonCommon from '@/common/input/button';
 import InputForm from '@/common/input/input-form';
 import React, { useCallback, useState } from 'react';
 
-export default function LoginPage() {
-  const [inputForm, setInputForm] = useState({ email: '', password: '' });
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
-  const handleInputFormChange = useCallback((value: string, id: string) => {
-    setInputForm((prevForm) => ({
+export default function LoginPage() {
+  const [inputForm, setInputForm] = useState<LoginForm>({
+    email: '',
+    password: '',
+  });
+
+  const handleInputFormChange = useCallback((value: string, name: string) => {
+    setInputForm((prevForm: LoginForm) => ({
       ...prevForm,
-      [id]: value,
+      [name]: value,
     }));
   }, []);
-  console.log(inputForm);
+  // console.log(inputForm);
 
   const handleSubmit = () => {
     console.log('submit');
@@ -20,7 +28,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <form>
+      <div>
         <InputForm
           label="E-mail"
           name="email"
@@ -37,7 +45,7 @@ export default function LoginPage() {
           onChange={handleInputFormChange}
           placeholder="password"
         ></InputForm>
-      </form>
+      </div>
       <ButtonCommon label="Submit" onButtonClick={handleSubmit} />
     </>
   );

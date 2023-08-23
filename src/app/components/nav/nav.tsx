@@ -8,11 +8,7 @@ export default function Nav() {
       className="absolute top-0 flex flex-col items-center w-16 hover:w-40 h-full overflow-hidden text-white bg-gray-900 z-20 pl-1"
     >
       <Link className="flex items-center w-full px-3 mt-6" href="#">
-        <img
-          className="mb-4 w-full"
-          src="/icons/fly_icon.svg"
-          alt="flyapp_logo"
-        />
+        <img className="mb-4" src="/icons/fly_icon.svg" alt="flyapp_logo" />
         <span className="ml-2 text-sm font-medium hidden">Fly App</span>
       </Link>
 
@@ -21,19 +17,7 @@ export default function Nav() {
           className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-white"
           href="#"
         >
-          <svg
-            className="h-8 w-8 text-white"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {' '}
-            <circle cx="11" cy="11" r="8" />{' '}
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+          <img className="mb-4" src="/icons/search_icon.svg" alt="search" />
           <span className="ml-2 text-sm font-medium hidden">Search</span>
         </Link>
 
@@ -42,7 +26,7 @@ export default function Nav() {
           href="#"
         >
           <svg
-            className="h-8 w-8 text-white"
+            className="h-6 w-6 ml-1 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -62,7 +46,7 @@ export default function Nav() {
           href="#"
         >
           <svg
-            className="h-8 w-8 text-white"
+            className="h-6 w-6 ml-1 text-white"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -85,7 +69,7 @@ export default function Nav() {
           href="#"
         >
           <svg
-            className="h-8 w-8 text-white"
+            className="h-6 w-6 ml-1 text-white"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -111,7 +95,7 @@ export default function Nav() {
           href="#"
         >
           <svg
-            className="h-8 w-8 text-white"
+            className="h-6 w-6 ml-1 text-white"
             width="24"
             height="24"
             viewBox="0 0 24 24"

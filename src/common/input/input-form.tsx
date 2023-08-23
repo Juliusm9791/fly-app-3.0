@@ -7,6 +7,7 @@ interface Props {
   type?: string;
   value: string;
   name?: string;
+  error?: string;
   placeholder?: string;
   onChange: (value: any, data?: any) => void;
 }
@@ -17,6 +18,7 @@ export default function InputForm({
   value,
   placeholder,
   name,
+  error,
   onChange,
 }: Props) {
   return (
@@ -29,6 +31,7 @@ export default function InputForm({
         type={type}
         name={name}
       />
+      <p>{error}</p>
     </label>
   );
 }

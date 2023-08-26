@@ -17,7 +17,7 @@ export default function Nav() {
           alt="flyapp_logo"
         />
         <span className="ml-4 mb-3 text-sm font-medium hidden text-white group-hover:block ">
-          Fly&nbsp;App
+          ç Fly&nbsp;App
         </span>
       </Link>
 

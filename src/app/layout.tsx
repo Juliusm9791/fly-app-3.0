@@ -23,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Nav />
-        <Footer />
-        <main className="px-40">{children}</main>
+        <main className="flex">
+          <Nav />
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   );

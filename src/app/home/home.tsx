@@ -25,13 +25,9 @@ export default function HomePage() {
 
   return (
     <main>
-      <div className="text-center">
-        <h1 className="text-4xl lg:text-6xl">FLY APP 3.0</h1>
-        {loading ? <p>Loading ...</p> : <p>{name.appName}</p>}
+      <div className="h-screen w-screen text-center">
+        <div>{loading ? <p>Loading ...</p> : <p>{name.appName}</p>}</div>
       </div>
-      <Link className="" href="/auth/login">
-        LogIn
-      </Link>
     </main>
   );
 }

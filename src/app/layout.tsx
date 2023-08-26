@@ -8,13 +8,6 @@ import Footer from './components/footer/footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
-// export const metadata: Metadata = {
-//   title: 'Fly App',
-//   icons: {
-//     // icon: "/flyapp.png",
-//   },
-// };
-
 export default function RootLayout({
   children,
 }: {

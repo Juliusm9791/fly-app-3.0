@@ -25,7 +25,7 @@ export default function HomePage() {
 
   return (
     <main>
-      <div className="position:relative h-screen w-screen text-center">
+      <div className="flex position:relative h-screen w-screen text-center">
         <div>{loading ? <p>Loading ...</p> : <p>{name.appName}</p>}</div>
       </div>
     </main>

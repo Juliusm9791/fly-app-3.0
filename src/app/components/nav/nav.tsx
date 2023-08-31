@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { SearchIcon, SettinsIcon } from '@/common/icons';
 
 export default function Nav() {
   return (
@@ -17,11 +18,7 @@ export default function Nav() {
           className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white hover:text-blue-400"
           href="#"
         >
-          <img
-            className="flex items-center h-14 w-14 text-white hover:text-blue-400"
-            src="/icons/search.svg"
-            alt="search"
-          />
+          <SearchIcon height="150" width="150" color="#60a5fa" />
           <span className="mb-7 text-sm font-medium hidden group-hover:block text-white">
             Search
           </span>
@@ -73,11 +70,7 @@ export default function Nav() {
           className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white hover:text-blue-400"
           href="#"
         >
-          <img
-            className="flex items-center h-14 w-14 text-white hover:text-blue-400"
-            src="/icons/settings.svg"
-            alt="settings"
-          />
+          <SettinsIcon color="red" />
 
           <span className="mb-7 text-sm font-medium hidden group-hover:block text-white">
             Settings

@@ -1,9 +1,9 @@
-type Isons = {
+type IconProps = {
   width?: string;
   height?: string;
   color?: string;
 };
-export function SearchIcon({ width, height, color }: Isons) {
+export function SearchIcon({ width, height, color }: IconProps) {
   return (
     <svg width={width} height={height} viewBox="0 0 1000 1000">
       <defs></defs>
@@ -19,7 +19,7 @@ export function SearchIcon({ width, height, color }: Isons) {
   );
 }
 
-export function SettinsIcon({ width, height, color }: Isons) {
+export function SettinsIcon({ width, height, color }: IconProps) {
   return (
     <svg width={width} height={height} viewBox="0 0 1000 1000">
       <defs></defs>

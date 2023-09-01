@@ -4,7 +4,7 @@ import { SearchIcon, SettinsIcon } from '@/common/icons';
 
 export default function Nav() {
   return (
-    <nav className="group flex-col items-center sm:bg-gray-900 position:absolute z-100 items-center w-20 h-screen hover:w-40">
+    <nav className="group flex-col sm:bg-gray-900 absolute z-100 w-20 h-screen hover:w-40">
       <Link className="flex items-center w-full px-3 mt-6" href="/">
         <img
           className="my-2 h-12 w-12 text-white hover:text-blue-400"
@@ -12,20 +12,17 @@ export default function Nav() {
           alt="flyapp_logo"
         />
       </Link>
+      <div className="pt-4 pl-6 flex flex-row sm:flex-col w-full mt-3 border-t border-gray-700">
+        <Link className="flex" href="#">
+       <SearchIcon height="150" width="150" color="#60a5fa" />
+          <span className="pl-4 text-sm font-medium hidden group-hover:block text-white">
 
-      <div className="pt-4 group flex flex-row sm:flex-col w-full mt-3 border-t border-gray-700">
-        <Link
-          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white hover:text-blue-400"
-          href="#"
-        >
-          <SearchIcon height="150" width="150" color="#60a5fa" />
-          <span className="mb-7 text-sm font-medium hidden group-hover:block text-white">
             Search
           </span>
         </Link>
 
         <Link
-          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white hover:text-blue-400"
+          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white"
           href="/auth/login"
         >
           <img
@@ -39,11 +36,11 @@ export default function Nav() {
         </Link>
 
         <Link
-          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white hover:text-blue-400"
+          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white"
           href="#"
         >
           <img
-            className="flex items-center h-14 w-14 text-white hover:text-blue-400"
+            className="flex items-center h-14 w-14 text-white"
             src="/icons/transfer.svg"
             alt="transfer"
           />
@@ -53,11 +50,11 @@ export default function Nav() {
         </Link>
 
         <Link
-          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white hover:text-blue-400"
+          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white"
           href="#"
         >
           <img
-            className="flex items-center h-14 w-14 text-white hover:text-blue-400"
+            className="flex items-center h-14 w-14 text-white"
             src="/icons/documents.svg"
             alt="documents"
           />
@@ -67,11 +64,10 @@ export default function Nav() {
         </Link>
 
         <Link
-          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white hover:text-blue-400"
+          className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white"
           href="#"
         >
           <SettinsIcon color="red" />
-
           <span className="mb-7 text-sm font-medium hidden group-hover:block text-white">
             Settings
           </span>

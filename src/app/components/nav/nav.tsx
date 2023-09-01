@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { SearchIcon, SettinsIcon } from '@/common/icons';
 
 export default function Nav() {
   return (
@@ -11,15 +12,11 @@ export default function Nav() {
           alt="flyapp_logo"
         />
       </Link>
-
       <div className="pt-4 pl-6 flex flex-row sm:flex-col w-full mt-3 border-t border-gray-700">
         <Link className="flex" href="#">
-          <img
-            className="h-7 w-7"
-            src="/icons/search-update.svg"
-            alt="search"
-          />
+       <SearchIcon height="150" width="150" color="#60a5fa" />
           <span className="pl-4 text-sm font-medium hidden group-hover:block text-white">
+
             Search
           </span>
         </Link>
@@ -70,12 +67,7 @@ export default function Nav() {
           className="group flex items-center w-full h-12 px-3 mt-2 rounded text-white"
           href="#"
         >
-          <img
-            className="flex items-center h-14 w-14 text-white"
-            src="/icons/settings.svg"
-            alt="settings"
-          />
-
+          <SettinsIcon color="red" />
           <span className="mb-7 text-sm font-medium hidden group-hover:block text-white">
             Settings
           </span>

@@ -4,7 +4,6 @@ import {
   DocumentsIcon,
   SearchIcon,
   SettingsIcon,
-  SettinsIcon,
   TransfersIcon,
   UserIcon,
 } from '@/common/icons';
@@ -20,7 +19,7 @@ export default function Nav() {
         />
       </Link>
 
-      <div className="pt-5 group flex flex-row sm:flex-col w-full mt-3 border-t border-gray-700">
+      <div className="pt-4 pl-6 flex flex-row sm:flex-col w-full mt-3 border-t border-gray-700">
         <Link
           className="group flex items-center w-full pl-3 pr-1 h-16 mt-1 ml-3 rounded text-white hover:text-blue-400"
           href="#"

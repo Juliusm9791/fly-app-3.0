@@ -16,11 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex w-full position:relative">
-          <div>
-            <Nav />
-          </div>
-          {children}
+        <main className="flex w-full relative">
+          <Nav />
+          <div className="ml-40">{children}</div>
           <Footer />
         </main>
       </body>

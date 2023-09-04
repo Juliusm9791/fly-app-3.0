@@ -9,9 +9,6 @@ import {
 } from '@/common/icons';
 import { comment } from 'postcss';
 
-// Test comment
-// Test comment
-
 export default function Nav() {
   return (
     <nav className="pt-4 group flex-col items-center sm:bg-gray-900 absolute z-100 items-center w-20 h-screen hover:w-40">

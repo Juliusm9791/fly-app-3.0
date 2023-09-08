@@ -1,26 +1,30 @@
-'use client';
 import './globals.css';
 import React from 'react';
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Nav from './components/nav/nav';
 import Footer from './components/footer/footer';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../pages/api/auth/[...nextauth]';
+import SessionProvider from '@/session-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="relative">
-          <Nav />
-          <div className="ml-40">{children}</div>
-          <Footer />
-        </main>
+        <SessionProvider session={session}>
+          <main className="flex w-full relative">
+            <Nav />
+            <div className="ml-40">{children}</div>
+            <Footer />
+          </main>
+        </SessionProvider>
       </body>
     </html>
   );

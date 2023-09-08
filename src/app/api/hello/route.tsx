@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   // const res = await fetch('https://data.mongodb-api.com/...', {
@@ -8,7 +8,7 @@ export async function GET() {
   //   },
   // });
   // const data = await res.json();
-  const data = { appName: "Hello Fly App 3" };
+  const data = { appName: 'Hello Fly App 3' };
 
   return NextResponse.json(data);
 }

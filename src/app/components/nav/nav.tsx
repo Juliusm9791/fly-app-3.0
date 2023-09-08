@@ -34,7 +34,7 @@ export default function Nav() {
 
         <Link
           className="group flex items-center w-full h-18 pl-3 pr-2 ml-4 rounded text-white hover:text-blue-400"
-          href="/auth/login"
+          href="/profile"
         >
           <UserIcon color={colors.iconColor} />
           <span className="mb-8 -ml-4 text-sm font-medium hidden group-hover:block text-white">

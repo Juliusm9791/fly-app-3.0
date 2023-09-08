@@ -8,6 +8,7 @@ import {
 import { auth } from '../../../src/firebase-config';
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: 'Credentials',

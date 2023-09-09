@@ -2,6 +2,7 @@
 import ButtonCommon from '@/common/input/button';
 import InputForm from '@/common/input/input-form';
 import React, { useCallback, useState } from 'react';
+import Link from 'next/link';
 
 interface LoginForm {
   email: string;
@@ -46,7 +47,14 @@ export default function LoginPage() {
           placeholder="password"
         ></InputForm>
       </div>
-      <ButtonCommon label="Submit" onButtonClick={handleSubmit} />
+      <ButtonCommon label="Login" onButtonClick={handleSubmit} />
+      <div className="text-black text-xs mt-4">
+        New here?
+        <Link className="px-1 hover:text-blue-400" href="/auth/sign-up">
+          Sign-up
+        </Link>
+        instead.
+      </div>
     </>
   );
 }

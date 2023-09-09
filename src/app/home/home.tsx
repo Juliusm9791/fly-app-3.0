@@ -26,19 +26,17 @@ export default function HomePage() {
 
   return (
     <main>
-      <div className="flex position:relative h-screen w-screen text-center">
-        <div className="flex flex-col">
-          {loading ? <p>Loading ...</p> : <p>{name.appName}</p>}
-        </div>
+      <div className="flex justify-center items-center">
+        {loading ? <p>Loading ...</p> : <p>{name.appName}</p>}
 
-        <div>
+        {/* <div className="">
           <hr />
           <br />
           <Link href="/auth/signin-test">Sign In</Link>
           <hr />
           <br />
           <Link href="/auth/login-test">Login</Link>
-        </div>
+        </div> */}
       </div>
     </main>
   );

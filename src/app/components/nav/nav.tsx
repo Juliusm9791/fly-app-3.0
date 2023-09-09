@@ -8,24 +8,25 @@ import {
   UserIcon,
 } from '@/common/icons';
 import { comment } from 'postcss';
+import { colors } from '@/common/colors';
 
 export default function Nav() {
   return (
-    <nav className="pt-4 group flex-col items-center sm:bg-gray-900 absolute z-100 items-center w-20 h-screen hover:w-40">
+    <nav className="pt-4 group flex-col items-center sm:bg-gray-900 absolute z-100 items-center w-20 h-screen hover:w-44">
       <Link className="flex items-center w-full pl-5" href="/">
         <img
-          className="my-2 h-10 w-10 text-white hover:text-blue-400"
+          className="my-2 h-10 w-10"
           src="/icons/fly_icon.svg"
           alt="flyapp_logo"
         />
       </Link>
 
-      <div className="pt-4 pl-6 flex flex-row sm:flex-col w-full mt-3 border-t border-gray-700">
+      <div className="pt-4 flex flex-row sm:flex-col w-full mt-3 border-t border-gray-700">
         <Link
-          className="group flex items-center w-full pl-3 pr-1 h-16 mt-1 ml-3 rounded text-white hover:text-blue-400"
+          className="group flex items-center w-full pl-3 pr-1 h-16 mt-1 ml-3 rounded text-white"
           href="#"
         >
-          <SearchIcon color="#60a5fa" />
+          <SearchIcon color={colors.iconColor} />
           <span className="mb-8 -ml-4 text-sm font-medium hidden group-hover:block text-white">
             Search
           </span>
@@ -35,7 +36,7 @@ export default function Nav() {
           className="group flex items-center w-full h-18 pl-3 pr-2 ml-4 rounded text-white hover:text-blue-400"
           href="/profile"
         >
-          <UserIcon color="#60a5fa" />
+          <UserIcon color={colors.iconColor} />
           <span className="mb-8 -ml-4 text-sm font-medium hidden group-hover:block text-white">
             Profile
           </span>
@@ -45,7 +46,7 @@ export default function Nav() {
           className="group flex items-center w-full h-12 px-3 mt-2 ml-4 rounded text-white hover:text-blue-400"
           href="#"
         >
-          <TransfersIcon color="#60a5fa" />
+          <TransfersIcon color={colors.iconColor} />
           <span className="mb-10 -ml-3 text-sm font-medium hidden group-hover:block text-white">
             Transfers
           </span>
@@ -55,7 +56,7 @@ export default function Nav() {
           className="group flex items-center w-full h-14 pl-3 pr-2 mt-2 ml-4 rounded text-white hover:text-blue-400"
           href="#"
         >
-          <DocumentsIcon color="#60a5fa" />
+          <DocumentsIcon color={colors.iconColor} />
           <span className="mb-11 -ml-4 text-sm font-medium hidden group-hover:block text-white">
             Documents
           </span>
@@ -65,7 +66,7 @@ export default function Nav() {
           className="group flex items-center w-full h-12 pl-3 pr-1 mt-2 ml-4 rounded text-white hover:text-blue-400"
           href="#"
         >
-          <SettingsIcon color="#60a5fa" />
+          <SettingsIcon color={colors.iconColor} />
           <span className="mb-11 -ml-6 text-sm font-medium hidden group-hover:block text-white">
             Settings
           </span>

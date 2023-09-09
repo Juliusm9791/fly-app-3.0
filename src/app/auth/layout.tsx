@@ -6,5 +6,5 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="mt-10">{children}</div>;
+  return <div className="m-auto text-center">{children}</div>;
 }

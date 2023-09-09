@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <h1 className="absolute bottom-0 w-full px-2 bg-gray-200 text-gray-400 z-0 text-center">
+    <h1 className="bottom-0 w-full py-4 bg-gray-100 text-xs text-gray-400 text-center absolute -z-1 max-[600px]:hidden">
       Fly App © 2023
     </h1>
   );

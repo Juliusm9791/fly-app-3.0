@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
+import { app } from '../../firebase-config';
 import Link from 'next/link';
 
 interface Hello {
@@ -25,13 +26,18 @@ export default function HomePage() {
 
   return (
     <main>
-      <div className="text-center">
-        <h1 className="text-4xl lg:text-6xl">FLY APP 3.0</h1>
+      <div className="flex justify-center items-center">
         {loading ? <p>Loading ...</p> : <p>{name.appName}</p>}
+
+        {/* <div className="">
+          <hr />
+          <br />
+          <Link href="/auth/signin-test">Sign In</Link>
+          <hr />
+          <br />
+          <Link href="/auth/login-test">Login</Link>
+        </div> */}
       </div>
-      <Link className="" href="/auth/login">
-        LogIn
-      </Link>
     </main>
   );
 }

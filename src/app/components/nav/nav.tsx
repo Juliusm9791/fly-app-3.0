@@ -1,116 +1,78 @@
 import React from 'react';
 import Link from 'next/link';
+import {
+  DocumentsIcon,
+  SearchIcon,
+  SettingsIcon,
+  TransfersIcon,
+  UserIcon,
+} from '@/common/icons';
+import { comment } from 'postcss';
+import { colors } from '@/common/colors';
 
 export default function Nav() {
   return (
-    <nav
-      id="fullNav"
-      className="absolute top-0 flex flex-col items-center w-16 hover:w-40 h-full overflow-hidden text-white bg-gray-900 z-20 pl-1"
-    >
-      <Link className="flex items-center w-full px-3 mt-6" href="#">
-        <img className="mb-4" src="/icons/fly_icon.svg" alt="flyapp_logo" />
-        <span className="ml-2 text-sm font-medium hidden">Fly App</span>
+    <nav className="absolute pt-4 group flex-col items-center bg-gray-900 z-10 w-20 h-screen hover:w-44 max-[600px]:bottom-0 max-[600px]:w-full max-[600px]:h-20 max-[600px]:pt-0 max-[600px]:mt-0 max-[600px]:hover:w-full">
+      <Link
+        className="flex items-center w-full pl-4 max-[600px]:hidden"
+        href="/"
+      >
+        <img
+          className="my-2 h-12 w-12"
+          src="/icons/fly_icon.svg"
+          alt="flyapp_logo"
+        />
       </Link>
 
-      <div className="flex flex-col items-center w-full mt-3 border-t border-gray-700">
+      <div className="relative z-20 pt-4 flex flex-col w-full mt-3 border-t border-gray-700 max-[600px]:flex-row max-[600px]:border-none">
         <Link
-          className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-white"
+          className="group flex items-center w-full pl-3 pr-1 h-16 mt-1 ml-3 rounded text-white max-[600px]:mt-0 max-[600px]:h-0"
           href="#"
         >
-          <img className="mb-4" src="/icons/search_icon.svg" alt="search" />
-          <span className="ml-2 text-sm font-medium hidden">Search</span>
+          <SearchIcon color={colors.iconColor} />
+          <span className="mb-8 -ml-4 text-sm font-medium hidden group-hover:block text-white max-[600px]:collapse">
+            Search
+          </span>
         </Link>
 
         <Link
-          className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-white"
-          href="#"
+          className="group flex items-center w-full h-18 pl-3 pr-2 ml-4 rounded text-white hover:text-blue-400 max-[600px]:h-0"
+          href="/auth/login"
         >
-          <svg
-            className="h-6 w-6 ml-1 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span className="ml-2 text-sm font-medium hidden">Profile</span>
+          <UserIcon color={colors.iconColor} />
+          <span className="mb-8 -ml-4 text-sm font-medium hidden group-hover:block text-white max-[600px]:collapse">
+            Profile
+          </span>
         </Link>
 
         <Link
-          className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-white"
+          className="group flex items-center w-full h-12 px-3 mt-2 ml-4 rounded text-white hover:text-blue-400 max-[600px]:h-0"
           href="#"
         >
-          <svg
-            className="h-6 w-6 ml-1 text-white"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {' '}
-            <path stroke="none" d="M0 0h24v24H0z" />{' '}
-            <path d="M3 9l4-4l4 4m-4 -4v14" />{' '}
-            <path d="M21 15l-4 4l-4-4m4 4v-14" />
-          </svg>
-          <span className="ml-2 text-sm font-medium hidden">Payments</span>
+          <TransfersIcon color={colors.iconColor} />
+          <span className="mb-10 -ml-3 text-sm font-medium hidden group-hover:block text-white max-[600px]:collapse">
+            Transfers
+          </span>
         </Link>
 
         <Link
-          className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-white"
+          className="group flex items-center w-full h-14 pl-3 pr-2 mt-2 ml-4 rounded text-white hover:text-blue-400 max-[600px]:h-0"
           href="#"
         >
-          <svg
-            className="h-6 w-6 ml-1 text-white"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {' '}
-            <path stroke="none" d="M0 0h24v24H0z" />{' '}
-            <rect x="3" y="4" width="18" height="16" rx="3" />{' '}
-            <circle cx="9" cy="10" r="2" />{' '}
-            <line x1="15" y1="8" x2="17" y2="8" />{' '}
-            <line x1="15" y1="12" x2="17" y2="12" />{' '}
-            <line x1="7" y1="16" x2="17" y2="16" />
-          </svg>
-          <span className="ml-2 text-sm font-medium hidden">Documents</span>
+          <DocumentsIcon color={colors.iconColor} />
+          <span className="mb-11 -ml-4 text-sm font-medium hidden group-hover:block text-white max-[600px]:collapse">
+            Documents
+          </span>
         </Link>
 
         <Link
-          className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-white"
+          className="group flex items-center w-full h-12 pl-3 pr-1 mt-2 ml-4 rounded text-white hover:text-blue-400 max-[600px]:h-0"
           href="#"
         >
-          <svg
-            className="h-6 w-6 ml-1 text-white"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {' '}
-            <path stroke="none" d="M0 0h24v24H0z" />{' '}
-            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />{' '}
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-          <span className="ml-2 text-sm font-medium hidden">Settings</span>
+          <SettingsIcon color={colors.iconColor} />
+          <span className="mb-11 text-sm -ml-5 font-medium hidden group-hover:block text-white max-[600px]:collapse">
+            Settings
+          </span>
         </Link>
       </div>
     </nav>

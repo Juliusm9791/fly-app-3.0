@@ -36,9 +36,9 @@ export default function TestPage() {
         redirect: false,
         // callbackUrl: '/auth/login-test',
       },
-      { prompt: 'signin' },
+      { prompt: 'signup' },
     ).then((res) => {
-      console.log('signin ', res);
+      console.log('signup ', res);
       if (res?.ok) {
         router.push('/auth/login-test');
       } else {

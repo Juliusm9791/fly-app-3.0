@@ -3,16 +3,20 @@ import ButtonCommon from '@/common/input/button';
 import InputForm from '@/common/input/input-form';
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
-
-interface LoginForm {
-  email: string;
-  password: string;
-}
+import {
+  emailValidation,
+  passwordValidation,
+} from '@/common/utils/validations';
+import { LoginForm } from '@/common/variable-types';
 
 export default function LoginPage() {
   const [inputForm, setInputForm] = useState<LoginForm>({
     email: '',
     password: '',
+  });
+  const [inputFormErrors, setInputFormErrors] = useState({
+    emailError: '',
+    passwordError: '',
   });
 
   const handleInputFormChange = useCallback((value: string, name: string) => {
@@ -24,7 +28,22 @@ export default function LoginPage() {
   // console.log(inputForm);
 
   const handleSubmit = () => {
-    console.log('submit');
+    const passwordErrors: string[] = passwordValidation(inputForm.password);
+
+    if (!emailValidation(inputForm.email)) {
+      setInputFormErrors((prev) => ({
+        ...prev,
+        emailError: 'Email not valid',
+      }));
+    } else {
+      setInputFormErrors((prev) => ({
+        ...prev,
+        emailError: '',
+      }));
+    }
+    if (passwordErrors.length !== 0) {
+      console.log(passwordErrors);
+    }
   };
 
   return (
@@ -37,7 +56,7 @@ export default function LoginPage() {
           value={inputForm.email}
           onChange={handleInputFormChange}
           placeholder="email"
-          error="email test error"
+          error={inputFormErrors.emailError}
         ></InputForm>
         <InputForm
           label="Password"
@@ -46,7 +65,7 @@ export default function LoginPage() {
           value={inputForm.password}
           onChange={handleInputFormChange}
           placeholder="password"
-          error="pswd test error"
+          error={inputFormErrors.passwordError}
         ></InputForm>
       </div>
       <ButtonCommon label="Login" onButtonClick={handleSubmit} />

@@ -34,14 +34,15 @@ export default function TestPage() {
         email: inputForm.email,
         password: inputForm.password,
         redirect: false,
+        // callbackUrl: '/auth/login-test',
       },
       { prompt: 'signin' },
-    ).then((rez) => {
-      console.log(rez);
-      if (rez?.ok) {
-        router.push('/profile');
+    ).then((res) => {
+      console.log('signin ', res);
+      if (res?.ok) {
+        router.push('/auth/login-test');
       } else {
-        console.log(rez?.error);
+        console.log(res?.error);
       }
     });
   };

@@ -10,13 +10,21 @@ export default function ProfilePage() {
       redirect('/auth/signin-test');
     },
   });
+  const handleSignOut = () => {
+    try {
+      signOut();
+      console.log('Sign-out successful.');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
       <div>Profile Page</div>
       <>
         Signed in as {session?.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        <button onClick={handleSignOut}>Sign out</button>
       </>
     </>
   );

@@ -10,7 +10,7 @@ type Props = {
 export default function SessionProvider({ children, session }: Props) {
   console.log('session ', session);
   return (
-    <Provider session={session} refetchInterval={5 * 60}>
+    <Provider session={session} refetchInterval={60}>
       {children}
     </Provider>
   );

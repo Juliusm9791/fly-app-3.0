@@ -4,8 +4,10 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
 } from 'firebase/auth';
-import { auth } from '../../../src/firebase-config';
+import { auth } from '../../../firebase-config';
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -16,36 +18,48 @@ export const authOptions = {
         email: { label: 'Email', type: 'text', placeholder: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        console.log('credentials ', credentials);
-        console.log('req ', req);
+      async authorize(credentials: any, req: any) {
         try {
-          let rez = null;
+          let response: any = null;
           switch (req.query.prompt) {
             case 'login':
-              rez = await signInWithEmailAndPassword(
+              response = await signInWithEmailAndPassword(
                 auth,
                 credentials.email,
                 credentials.password,
               );
+              const userData = await auth.currentUser?.getIdTokenResult(true);
+              if (userData?.claims.email_verified) {
+                break;
+              }
+              await sendEmailVerification(response.user);
+              await signOut(auth);
+              throw new Error('EMAIL NOT VERIFIED');
+              response = null;
               break;
+
             case 'signin':
-              rez = await createUserWithEmailAndPassword(
+              response = await createUserWithEmailAndPassword(
                 auth,
                 credentials.email,
                 credentials.password,
               );
+              await sendEmailVerification(response.user);
+              await signOut(auth);
+              response = null;
+              throw 'EMAIL VERIFICATION SENT';
               break;
+
             default:
               break;
           }
 
-          if (rez) {
-            return rez.user;
+          if (response.user) {
+            return response.user;
           }
           return null;
-        } catch (error) {
-          console.log(error.code);
+        } catch (error: any) {
+          throw new Error(error);
         }
       },
     }),
@@ -56,10 +70,10 @@ export const authOptions = {
   ],
   pages: {
     signIn: '/auth/login-test',
-    signOut: '/auth/signout',
-    error: '/auth/error', // Error code passed in query string as ?error=
-    verifyRequest: '/auth/verify-request', // (used for check email message)
-    newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
+    // signOut: '/auth/signout',
+    // error: '/auth/error', // Error code passed in query string as ?error=
+    // verifyRequest: '/auth/verify-request', // (used for check email message)
+    // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
   },
 };
 

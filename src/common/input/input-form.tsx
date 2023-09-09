@@ -21,6 +21,7 @@ export default function InputForm({
   error,
   onChange,
 }: Props) {
+  let errorField = `${error ? '' : 'mt-8'}`;
   return (
     <label className="block">
       <p className="text-gray-700 text-left ">{label}</p>
@@ -31,7 +32,9 @@ export default function InputForm({
         type={type}
         name={name}
       />
-      <p>{error}</p>
+      <p className="text-sm text-red-700">
+        <span className={errorField}>{error}</span>
+      </p>
     </label>
   );
 }

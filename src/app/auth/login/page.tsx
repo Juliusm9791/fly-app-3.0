@@ -37,6 +37,7 @@ export default function LoginPage() {
           value={inputForm.email}
           onChange={handleInputFormChange}
           placeholder="email"
+          error="email test error"
         ></InputForm>
         <InputForm
           label="Password"
@@ -45,6 +46,7 @@ export default function LoginPage() {
           value={inputForm.password}
           onChange={handleInputFormChange}
           placeholder="password"
+          error="pswd test error"
         ></InputForm>
       </div>
       <ButtonCommon label="Login" onButtonClick={handleSubmit} />

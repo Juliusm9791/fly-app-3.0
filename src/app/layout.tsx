@@ -19,9 +19,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
-          <main className="flex w-full relative">
+          <main>
             <Nav />
-            <div className="ml-40">{children}</div>
+            <div className="pt-20 flex justify-center items-center">
+              {children}
+            </div>
             <Footer />
           </main>
         </SessionProvider>

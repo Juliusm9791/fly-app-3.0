@@ -15,7 +15,6 @@ export default function LoginPage() {
   const handleInputChange = useCallback((value: string) => {
     setEmail(value);
   }, []);
-  console.log(process.env.REACT_APP_apiKey);
 
   const handleSubmit = () => {
     if (!emailValidation(email)) {

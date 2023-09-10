@@ -16,13 +16,18 @@ export default function LoginPage() {
     setEmail(value);
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!emailValidation(email)) {
       setEmailErrors('Email address is not valid');
     } else {
-      sendPasswordResetEmail(auth, email);
-      setEmailErrors('');
-      router.push('/auth/login');
+      try {
+        const res = await sendPasswordResetEmail(auth, email);
+        console.log(JSON.stringify(res));
+        setEmailErrors('');
+        router.push('/auth/login');
+      } catch (e: any) {
+        setEmailErrors(e.code);
+      }
     }
   };
 

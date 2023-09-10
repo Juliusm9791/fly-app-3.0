@@ -35,10 +35,8 @@ export const authOptions = {
               await sendEmailVerification(response.user);
               await signOut(auth);
               throw new Error('EMAIL NOT VERIFIED');
-              response = null;
-              break;
 
-            case 'signin':
+            case 'signup':
               response = await createUserWithEmailAndPassword(
                 auth,
                 credentials.email,
@@ -48,7 +46,6 @@ export const authOptions = {
               await signOut(auth);
               response = null;
               throw 'EMAIL VERIFICATION SENT';
-              break;
 
             default:
               break;

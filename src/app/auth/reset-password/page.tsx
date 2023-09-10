@@ -22,7 +22,6 @@ export default function LoginPage() {
     } else {
       try {
         const res = await sendPasswordResetEmail(auth, email);
-        console.log(JSON.stringify(res));
         setEmailErrors('');
         router.push('/auth/login');
       } catch (e: any) {

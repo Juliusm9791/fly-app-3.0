@@ -76,6 +76,12 @@ export default function LoginPage() {
         </Link>
         instead.
       </div>
+      <div className="text-black text-xs mt-4">
+        Forgot password?
+        <Link className="px-1 hover:text-blue-400" href="/auth/reset-password">
+          Reset
+        </Link>
+      </div>
     </>
   );
 }

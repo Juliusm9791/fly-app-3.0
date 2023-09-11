@@ -24,7 +24,9 @@ export default async function RootLayout({
             <div className="pt-20 flex justify-center items-center">
               {children}
             </div>
-            <Footer />
+            <footer className="max-sm:hidden">
+              <Footer />
+            </footer>
           </main>
         </SessionProvider>
       </body>

@@ -7,6 +7,7 @@ import { emailValidation } from '@/common/utils/validations';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/firebase-config';
 import { useRouter } from 'next/navigation';
+import { firebaseErrorMsgStringClean } from '@/common/utils/string-utils';
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('');
@@ -18,14 +19,15 @@ export default function LoginPage() {
 
   const handleSubmit = async () => {
     if (!emailValidation(email)) {
-      setEmailErrors('Email address is not valid');
+      setEmailErrors('Email address is not valid.');
     } else {
       try {
-        const res = await sendPasswordResetEmail(auth, email);
+        await sendPasswordResetEmail(auth, email);
         setEmailErrors('');
+        alert('Password reset email sent successfully.');
         router.push('/auth/login');
       } catch (e: any) {
-        setEmailErrors(e.code);
+        setEmailErrors(firebaseErrorMsgStringClean(e.code));
       }
     }
   };

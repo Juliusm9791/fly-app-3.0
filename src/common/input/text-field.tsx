@@ -5,6 +5,7 @@ export type Props = {
   name?: string;
   type?: string;
   placeholder?: string;
+  disabled?: boolean;
   onChange: (value: string, name: string) => void;
 };
 
@@ -13,6 +14,7 @@ export default function TextField({
   name,
   type,
   placeholder,
+  disabled,
   onChange,
 }: Props) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,6 +26,7 @@ export default function TextField({
   return (
     <div>
       <input
+        disabled={disabled}
         name={name}
         type={type || 'text'}
         value={value}

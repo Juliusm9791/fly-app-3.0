@@ -12,30 +12,70 @@ export const menuItems = [
     id: 1,
     name: 'Search',
     link: '/search',
-    icon: <SearchIcon color={colors.iconColor} width="30" height="30" />,
+    icon: (selectedColor: string | null) => {
+      return (
+        <SearchIcon
+          color={selectedColor ? selectedColor : colors.iconColor}
+          width="30"
+          height="30"
+        />
+      );
+    },
   },
   {
     id: 2,
     name: 'Profile',
     link: '/profile',
-    icon: <UserIcon color={colors.iconColor} width="30" height="30" />,
+    icon: (selectedColor: string | null) => {
+      return (
+        <UserIcon
+          color={selectedColor ? selectedColor : colors.iconColor}
+          width="30"
+          height="30"
+        />
+      );
+    },
   },
   {
     id: 3,
     name: 'Transfers',
     link: '/transfers',
-    icon: <TransfersIcon color={colors.iconColor} width="30" height="30" />,
+    icon: (selectedColor: string | null) => {
+      return (
+        <TransfersIcon
+          color={selectedColor ? selectedColor : colors.iconColor}
+          width="30"
+          height="30"
+        />
+      );
+    },
   },
   {
     id: 4,
     name: 'Documents',
     link: '/documents',
-    icon: <DocumentsIcon color={colors.iconColor} width="30" height="30" />,
+    icon: (selectedColor: string | null) => {
+      return (
+        <DocumentsIcon
+          color={selectedColor ? selectedColor : colors.iconColor}
+          width="30"
+          height="30"
+        />
+      );
+    },
   },
   {
     id: 5,
     name: 'Settings',
     link: '/settings',
-    icon: <SettingsIcon color={colors.iconColor} width="30" height="30" />,
+    icon: (selectedColor: string | null) => {
+      return (
+        <SettingsIcon
+          color={selectedColor ? selectedColor : colors.iconColor}
+          width="30"
+          height="30"
+        />
+      );
+    },
   },
 ];

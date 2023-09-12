@@ -72,6 +72,16 @@ export const authOptions = {
     // verifyRequest: '/auth/verify-request', // (used for check email message)
     // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
   },
+
+  callbacks: {
+    session({ session, token }: any) {
+      if (session?.user) {
+        session.user.uid = token.user.uid;
+        session.user.emailVerified = token.user.emailVerified;
+      }
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);

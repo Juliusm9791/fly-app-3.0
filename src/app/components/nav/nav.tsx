@@ -10,21 +10,21 @@ export default function Nav() {
 
   return (
     <nav
-      className={`absolute z-20 group flex-col items-center ${colors.navBackground} sm:h-screen sm:hover:w-44 max-sm:bottom-0 max-sm:w-full max-sm:h-16 max-sm:pt-0 max-sm:mt-0 `}
+      className={`absolute z-20 group flex-col items-center ${colors.navBackground} sm:h-screen sm:hover:w-40 max-sm:bottom-0 max-sm:w-full max-sm:h-16 max-sm:pt-0 max-sm:mt-0 `}
     >
       <Link className="flex items-center w-full pl-1.5 max-sm:hidden" href="/">
         <img
-          className="my-2 h-12 w-12"
+          className="my-2 pr-2 h-14 w-14"
           src="/icons/fly_icon.svg"
           alt="flyapp_logo"
         />
       </Link>
 
-      <div className="relative flex flex-col w-full max-sm:mt-4 border-t border-gray-700 max-sm:flex-row max-sm:border-none">
+      <div className="relative flex flex-col w-full border-t border-gray-700 pl-1 max-sm:mt-4  max-sm:flex-row max-sm:border-none">
         {menuItems.map((menu) => (
           <Link
             key={menu.id}
-            className="flex sm:items-center sm:p-4 max-sm:justify-around max-sm:w-full"
+            className="flex sm:items-center sm:p-4 max-sm:justify-around max-sm:w-full max-sm:pt-1"
             href={menu.link}
           >
             <div className="flex items-center">

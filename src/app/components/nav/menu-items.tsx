@@ -12,12 +12,13 @@ export const menuItems = [
     id: 1,
     name: 'Search',
     link: '/search',
+
     icon: (selectedColor: string | null) => {
       return (
         <SearchIcon
           color={selectedColor ? selectedColor : colors.iconColor}
-          width="30"
-          height="30"
+          width="20"
+          height="20"
         />
       );
     },
@@ -30,8 +31,8 @@ export const menuItems = [
       return (
         <UserIcon
           color={selectedColor ? selectedColor : colors.iconColor}
-          width="30"
-          height="30"
+          width="20"
+          height="20"
         />
       );
     },
@@ -40,15 +41,17 @@ export const menuItems = [
     id: 3,
     name: 'Transfers',
     link: '/transfers',
+
     icon: (selectedColor: string | null) => {
       return (
         <TransfersIcon
           color={selectedColor ? selectedColor : colors.iconColor}
-          width="30"
-          height="30"
+          width="20"
+          height="20"
         />
       );
     },
+
   },
   {
     id: 4,
@@ -58,11 +61,12 @@ export const menuItems = [
       return (
         <DocumentsIcon
           color={selectedColor ? selectedColor : colors.iconColor}
-          width="30"
-          height="30"
+          width="20"
+          height="20"
         />
       );
     },
+
   },
   {
     id: 5,
@@ -72,8 +76,8 @@ export const menuItems = [
       return (
         <SettingsIcon
           color={selectedColor ? selectedColor : colors.iconColor}
-          width="30"
-          height="30"
+          width="20"
+          height="20"
         />
       );
     },

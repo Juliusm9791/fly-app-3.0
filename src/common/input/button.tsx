@@ -14,7 +14,7 @@ export default function ButtonCommon({
   return (
     <div className="mt-4">
       <button
-        className="rounded-md p-4 text-center bg-indigo-950 text-white"
+        className="rounded-md p-4 text-center bg-gray-900 text-white"
         onClick={onButtonClick}
         disabled={disabled}
       >

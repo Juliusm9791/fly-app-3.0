@@ -1,76 +1,42 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
-import {
-  DocumentsIcon,
-  SearchIcon,
-  SettingsIcon,
-  TransfersIcon,
-  UserIcon,
-} from '@/common/icons';
-import { comment } from 'postcss';
 import { colors } from '@/common/colors';
+import { menuItems } from './menu-items';
+import { usePathname } from 'next/navigation';
 
 export default function Nav() {
+  const path = usePathname();
+
   return (
-    <nav className="absolute pt-4 group flex-col items-center bg-gray-900 z-10 w-20 h-screen hover:w-44 max-sm:bottom-0 max-sm:w-full max-sm:h-20 max-sm:pt-0 max-sm:mt-0 max-sm:hover:w-full">
-      <Link className="flex items-center w-full pl-4 max-sm:hidden" href="/">
+    <nav
+      className={`absolute z-20 group flex-col items-center ${colors.navBackground} sm:h-screen sm:hover:w-40 max-sm:bottom-0 max-sm:w-full max-sm:h-16 max-sm:pt-0 max-sm:mt-0 `}
+    >
+      <Link className="flex items-center w-full pl-1.5 max-sm:hidden" href="/">
         <img
-          className="my-2 h-12 w-12"
+          className="my-2 pr-2 h-14 w-14"
           src="/icons/fly_icon.svg"
           alt="flyapp_logo"
         />
       </Link>
 
-      <div className="relative z-20 pt-4 flex flex-col w-full mt-3 border-t border-gray-700 max-sm:flex-row max-sm:border-none">
-        <Link
-          className="group flex items-center w-full pl-3 pr-1 h-16 mt-1 ml-3 rounded text-white max-sm:mt-0 max-sm:h-0"
-          href="#"
-        >
-          <SearchIcon color={colors.iconColor} />
-          <span className="mb-8 -ml-4 text-sm font-medium hidden group-hover:block text-white max-sm:collapse">
-            Search
-          </span>
-        </Link>
-
-        <Link
-          className="group flex items-center w-full h-18 pl-3 pr-2 ml-4 rounded text-white hover:text-blue-400 max-sm:h-0"
-          href="/auth/login"
-        >
-          <UserIcon color={colors.iconColor} />
-          <span className="mb-8 -ml-4 text-sm font-medium hidden group-hover:block text-white max-sm:collapse">
-            Profile
-          </span>
-        </Link>
-
-        <Link
-          className="group flex items-center w-full h-12 px-3 mt-2 ml-4 rounded text-white hover:text-blue-400 max-sm:h-0"
-          href="#"
-        >
-          <TransfersIcon color={colors.iconColor} />
-          <span className="mb-10 -ml-3 text-sm font-medium hidden group-hover:block text-white max-sm:collapse">
-            Transfers
-          </span>
-        </Link>
-
-        <Link
-          className="group flex items-center w-full h-14 pl-3 pr-2 mt-2 ml-4 rounded text-white hover:text-blue-400 max-sm:h-0"
-          href="#"
-        >
-          <DocumentsIcon color={colors.iconColor} />
-          <span className="mb-11 -ml-4 text-sm font-medium hidden group-hover:block text-white max-sm:collapse">
-            Documents
-          </span>
-        </Link>
-
-        <Link
-          className="group flex items-center w-full h-12 pl-3 pr-1 mt-2 ml-4 rounded text-white hover:text-blue-400 max-sm:h-0"
-          href="#"
-        >
-          <SettingsIcon color={colors.iconColor} />
-          <span className="mb-11 text-sm -ml-5 font-medium hidden group-hover:block text-white max-sm:collapse">
-            Settings
-          </span>
-        </Link>
+      <div className="relative flex flex-col w-full border-t border-gray-700 pl-1 max-sm:mt-4  max-sm:flex-row max-sm:border-none">
+        {menuItems.map((menu) => (
+          <Link
+            key={menu.id}
+            className="flex sm:items-center sm:p-4 max-sm:justify-around max-sm:w-full max-sm:pt-1"
+            href={menu.link}
+          >
+            <div className="flex items-center">
+              {menu.icon(
+                path?.includes(menu.link) ? colors.iconSelectedColor : null,
+              )}
+              <span className="pl-4 text-sm hidden sm:group-hover:block text-white max-sm:collapse">
+                {menu.name}
+              </span>
+            </div>
+          </Link>
+        ))}
       </div>
     </nav>
   );

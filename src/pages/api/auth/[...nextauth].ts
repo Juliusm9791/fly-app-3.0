@@ -35,10 +35,8 @@ export const authOptions = {
               await sendEmailVerification(response.user);
               await signOut(auth);
               throw new Error('EMAIL NOT VERIFIED');
-              response = null;
-              break;
 
-            case 'signin':
+            case 'signup':
               response = await createUserWithEmailAndPassword(
                 auth,
                 credentials.email,
@@ -48,7 +46,6 @@ export const authOptions = {
               await signOut(auth);
               response = null;
               throw 'EMAIL VERIFICATION SENT';
-              break;
 
             default:
               break;
@@ -74,6 +71,16 @@ export const authOptions = {
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // (used for check email message)
     // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
+
+  callbacks: {
+    session({ session, token }: any) {
+      if (session?.user) {
+        session.user.uid = token.user.uid;
+        session.user.emailVerified = token.user.emailVerified;
+      }
+      return session;
+    },
   },
 };
 

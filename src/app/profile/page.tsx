@@ -7,12 +7,13 @@ import { db } from '@/firebase-config';
 import InputForm from '@/common/input/input-form';
 import ButtonCommon from '@/common/input/button';
 import { UserProfile } from '@/common/variable-types';
+import Link from 'next/link';
 
 export default function ProfilePage() {
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      redirect('/auth/signin-test');
+      redirect('/auth/login');
     },
   });
   const usersCollectionRef = collection(db, 'users');
@@ -68,22 +69,33 @@ export default function ProfilePage() {
   return (
     <>
       <div>Profile Page</div>
-      <div className="flex flex-col">
-        <p>
-          Signed in as: <i> {userProfile.email} </i>
-        </p>
-        <br />
-        <p>
-          UID: <i>{userProfile.auth_uid}</i>
-        </p>
-        <br />
-        <p>
-          emailVerified: <i>{userProfile.emailVerified && 'TRUE'}</i>
-        </p>
-        <br />
-
-        <button onClick={handleSignOut}>Sign out</button>
+      <div className="flex flex-col justify-center items-center">
+        <Link
+          className="flex items-center justify-center w-full sm:hidden"
+          href="/"
+        >
+          <img
+            className="h-14 w-14"
+            src="/icons/fly_icon.svg"
+            alt="flyapp_logo"
+          />
+        </Link>
       </div>
+      <p>
+        Signed in as: <i> {userProfile.email} </i>
+      </p>
+      <br />
+      <p>
+        UID: <i>{userProfile.auth_uid}</i>
+      </p>
+      <br />
+      <p>
+        emailVerified: <i>{userProfile.emailVerified && 'TRUE'}</i>
+      </p>
+      <br />
+
+      <button onClick={handleSignOut}>Sign out</button>
+
       <InputForm
         label="Name"
         value={userProfile.firstName}

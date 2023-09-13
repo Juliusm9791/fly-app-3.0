@@ -26,17 +26,18 @@ export default function HomePage() {
 
   return (
     <main>
+      <Link
+        className="flex items-center justify-center w-full sm:hidden"
+        href="/"
+      >
+        <img
+          className="h-14 w-14"
+          src="/icons/fly_icon.svg"
+          alt="flyapp_logo"
+        />
+      </Link>
       <div className="flex justify-center items-center">
         {loading ? <p>Loading ...</p> : <p>{name.appName}</p>}
-
-        {/* <div className="">
-          <hr />
-          <br />
-          <Link href="/auth/signin-test">Sign In</Link>
-          <hr />
-          <br />
-          <Link href="/auth/login-test">Login</Link>
-        </div> */}
       </div>
     </main>
   );

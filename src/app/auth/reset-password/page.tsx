@@ -34,27 +34,40 @@ export default function LoginPage() {
 
   return (
     <>
-      <div>
-        <InputForm
-          label="E-mail"
-          name="email"
-          type="email"
-          value={email}
-          onChange={handleInputChange}
-          placeholder="email"
-          error={emailError}
-        ></InputForm>
-      </div>
-      <ButtonCommon
-        label="Reset Password"
-        onButtonClick={handleSubmit}
-        // disabled={!emailValidation(email)}
-      />
-      <div className="text-black text-xs mt-4">
-        Back to
-        <Link className="px-1 hover:text-blue-400" href="/auth/login">
-          Login.
+      <div className="flex flex-col justify-center items-center">
+        <Link
+          className="flex items-center justify-center mb-4 w-full sm:hidden"
+          href="/"
+        >
+          <img
+            className="h-14 w-14"
+            src="/icons/fly_icon.svg"
+            alt="flyapp_logo"
+          />
         </Link>
+        <div>
+          <InputForm
+            label="E-mail"
+            name="email"
+            type="email"
+            value={email}
+            onChange={handleInputChange}
+            placeholder="email"
+            error={emailError}
+          ></InputForm>
+        </div>
+        <ButtonCommon
+          label="Reset Password"
+          onButtonClick={handleSubmit}
+          // disabled={!emailValidation(email)}
+        />
+        <div className="text-black text-xs mt-4">
+          Back to
+          <Link className="pl-1 hover:text-blue-400" href="/auth/login">
+            Login
+          </Link>
+          .
+        </div>
       </div>
     </>
   );

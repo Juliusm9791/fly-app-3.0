@@ -8,7 +8,7 @@ export async function GET() {
   //   },
   // });
   // const data = await res.json();
-  const data = { appName: 'Hello Fly App 3' };
+  const data = { appName: 'Hello Fly App 3.0' };
 
   return NextResponse.json(data);
 }

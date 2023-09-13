@@ -21,7 +21,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <main>
             <Nav />
-            <div className="pt-20 flex justify-center items-center">
+            <div className="pt-4 flex justify-center items-center">
               {children}
             </div>
             <footer className="max-sm:hidden">

@@ -8,15 +8,19 @@ import {
   passwordValidation,
 } from '@/common/utils/validations';
 import { LoginForm } from '@/common/variable-types';
+interface LoginError {
+  emailError: string;
+  passwordError: string[];
+}
 
 export default function LoginPage() {
   const [inputForm, setInputForm] = useState<LoginForm>({
     email: '',
     password: '',
   });
-  const [inputFormErrors, setInputFormErrors] = useState({
+  const [inputFormErrors, setInputFormErrors] = useState<LoginError>({
     emailError: '',
-    passwordError: '',
+    passwordError: [],
   });
 
   const handleInputFormChange = useCallback((value: string, name: string) => {
@@ -43,6 +47,10 @@ export default function LoginPage() {
     }
     if (passwordErrors.length !== 0) {
       console.log(passwordErrors);
+      setInputFormErrors((prev) => ({
+        ...prev,
+        passwordError: passwordErrors,
+      }));
     }
   };
 
@@ -76,8 +84,10 @@ export default function LoginPage() {
             value={inputForm.password}
             onChange={handleInputFormChange}
             placeholder="password"
-            error={inputFormErrors.passwordError}
           ></InputForm>
+          {inputFormErrors.passwordError.map((el) => (
+            <p key={el}>{el}</p>
+          ))}
         </div>
         <ButtonCommon label="Login" onButtonClick={handleSubmit} />
         <div className="text-black text-xs mt-4">

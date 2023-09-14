@@ -31,7 +31,7 @@ export default function Nav() {
               {menu.icon(
                 path?.includes(menu.link) ? colors.iconSelectedColor : null,
               )}
-              <span className="pl-4 text-sm hidden sm:group-hover:block text-white max-sm:collapse">
+              <span className="pl-4 text-white text-sm hidden sm:group-hover:block hover:text-blue-300 max-sm:collapse">
                 {menu.name}
               </span>
             </div>

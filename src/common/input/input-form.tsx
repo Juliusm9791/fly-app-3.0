@@ -27,7 +27,7 @@ export default function InputForm({
   let errorField = `${error ? '' : 'mt-8'}`;
   return (
     <label className="block">
-      <p className="text-gray-700 text-left ">{label}</p>
+      <p className="text-gray-700 text-left">{label}</p>
       <TextField
         value={value}
         onChange={onChange}
@@ -36,7 +36,7 @@ export default function InputForm({
         name={name}
         disabled={disabled}
       />
-      <p className="text-sm text-red-700">
+      <p className={`${error ? 'mt-0' : 'mt-6'} text-sm text-red-700`}>
         <span className={errorField}>{error}</span>
       </p>
     </label>

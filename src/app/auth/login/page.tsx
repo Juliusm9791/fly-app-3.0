@@ -8,15 +8,19 @@ import {
   passwordValidation,
 } from '@/common/utils/validations';
 import { LoginForm } from '@/common/variable-types';
+interface LoginError {
+  emailError: string;
+  passwordError: string[];
+}
 
 export default function LoginPage() {
   const [inputForm, setInputForm] = useState<LoginForm>({
     email: '',
     password: '',
   });
-  const [inputFormErrors, setInputFormErrors] = useState({
+  const [inputFormErrors, setInputFormErrors] = useState<LoginError>({
     emailError: '',
-    passwordError: '',
+    passwordError: [],
   });
 
   const handleInputFormChange = useCallback((value: string, name: string) => {
@@ -43,6 +47,10 @@ export default function LoginPage() {
     }
     if (passwordErrors.length !== 0) {
       console.log(passwordErrors);
+      setInputFormErrors((prev) => ({
+        ...prev,
+        passwordError: passwordErrors,
+      }));
     }
   };
 
@@ -81,7 +89,48 @@ export default function LoginPage() {
         <Link className="pl-1 hover:text-blue-400" href="/auth/reset-password">
           Reset
         </Link>
-        .
+
+        <div>
+          <InputForm
+            label="E-mail"
+            name="email"
+            type="email"
+            value={inputForm.email}
+            onChange={handleInputFormChange}
+            placeholder="email"
+            error={inputFormErrors.emailError}
+          ></InputForm>
+          <InputForm
+            label="Password"
+            name="password"
+            type="password"
+            value={inputForm.password}
+            onChange={handleInputFormChange}
+            placeholder="password"
+          ></InputForm>
+          {inputFormErrors.passwordError.map((el) => (
+            <p key={el}>{el}</p>
+          ))}
+        </div>
+        <ButtonCommon label="Login" onButtonClick={handleSubmit} />
+        <div className="text-black text-xs mt-4">
+          New here?
+          <Link className="px-1 hover:text-blue-400" href="/auth/sign-up">
+            Sign-up
+          </Link>
+          instead.
+        </div>
+        <div className="text-black text-xs mt-2">
+          Forgot password?
+          <Link
+            className="pl-1 hover:text-blue-400"
+            href="/auth/reset-password"
+          >
+            Reset
+          </Link>
+          .
+        </div>
+
       </div>
     </>
   );

@@ -14,7 +14,7 @@ export default function ButtonCommon({
   return (
     <div className="mt-4">
       <button
-        className="rounded-md p-4 text-center bg-gray-900 text-white"
+        className="rounded py-3 block w-40 text-center bg-gray-900 text-white hover:text-blue-300"
         onClick={onButtonClick}
         disabled={disabled}
       >

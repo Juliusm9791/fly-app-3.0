@@ -4,23 +4,19 @@ import InputForm from '@/common/input/input-form';
 import { signIn } from 'next-auth/react';
 import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { SignupForm } from '@/common/variable-types';
+import Link from 'next/link';
 
-interface TestForm {
-  email: string;
-  password: string;
-  passwordConfirm: string;
-}
-
-export default function TestPage() {
+export default function signupPage() {
   const router = useRouter();
-  const [inputForm, setInputForm] = useState<TestForm>({
+  const [inputForm, setInputForm] = useState<SignupForm>({
     email: '',
     password: '',
     passwordConfirm: '',
   });
 
   const handleInputFormChange = useCallback((value: string, name: string) => {
-    setInputForm((prevForm: TestForm) => ({
+    setInputForm((prevForm: SignupForm) => ({
       ...prevForm,
       [name]: value,
     }));
@@ -34,13 +30,12 @@ export default function TestPage() {
         email: inputForm.email,
         password: inputForm.password,
         redirect: false,
-        // callbackUrl: '/auth/login-test',
       },
       { prompt: 'signup' },
     ).then((res) => {
       console.log('signup ', res);
       if (res?.ok) {
-        router.push('/auth/login-test');
+        router.push('/auth/login');
       } else {
         console.log(res?.error);
       }
@@ -72,15 +67,17 @@ export default function TestPage() {
           type="password"
           value={inputForm.passwordConfirm}
           onChange={handleInputFormChange}
-          placeholder="Confitm password"
+          placeholder="Confirm password"
         ></InputForm>
       </div>
       <ButtonCommon label="Submit" onButtonClick={handleEmailSignIn} />
-      {/* 
-      <ButtonCommon
-        label="Sign in with google"
-        onButtonClick={() => signIn('google')}
-      /> */}
+      <div className="text-black text-xs mt-4">
+        Back to
+        <Link className="pl-1 hover:text-blue-400" href="/auth/login">
+          login
+        </Link>
+        .
+      </div>
     </>
   );
 }

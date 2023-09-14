@@ -1,5 +1,5 @@
 export const colors = {
   iconColor: '#60a5fa',
-  iconSelectedColor: '#FFFF',
+  iconSelectedColor: '#60a5fa',
   navBackground: 'bg-gray-900',
 };

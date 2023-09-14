@@ -41,7 +41,7 @@ export default function LoginPage() {
           type="email"
           value={email}
           onChange={handleInputChange}
-          placeholder="email"
+          placeholder="E-mail"
           error={emailError}
         ></InputForm>
       </div>

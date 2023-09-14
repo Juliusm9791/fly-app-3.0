@@ -51,7 +51,7 @@ export default function signupPage() {
           type="email"
           value={inputForm.email}
           onChange={handleInputFormChange}
-          placeholder="Email"
+          placeholder="E-mail"
         ></InputForm>
         <InputForm
           label="Password"

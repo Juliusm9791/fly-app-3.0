@@ -63,7 +63,7 @@ export default function LoginPage() {
           type="email"
           value={inputForm.email}
           onChange={handleInputFormChange}
-          placeholder="email"
+          placeholder="E-mail"
           error={inputFormErrors.emailError}
         ></InputForm>
         <InputForm
@@ -72,9 +72,11 @@ export default function LoginPage() {
           type="password"
           value={inputForm.password}
           onChange={handleInputFormChange}
-          placeholder="password"
-          error={inputFormErrors.passwordError}
+          placeholder="Password"
         ></InputForm>
+        {inputFormErrors.passwordError.map((el) => (
+          <p key={el}>{el}</p>
+        ))}
       </div>
       <ButtonCommon label="Login" onButtonClick={handleSubmit} />
       <div className="text-black text-xs mt-4">
@@ -89,48 +91,7 @@ export default function LoginPage() {
         <Link className="pl-1 hover:text-blue-400" href="/auth/reset-password">
           Reset
         </Link>
-
-        <div>
-          <InputForm
-            label="E-mail"
-            name="email"
-            type="email"
-            value={inputForm.email}
-            onChange={handleInputFormChange}
-            placeholder="email"
-            error={inputFormErrors.emailError}
-          ></InputForm>
-          <InputForm
-            label="Password"
-            name="password"
-            type="password"
-            value={inputForm.password}
-            onChange={handleInputFormChange}
-            placeholder="password"
-          ></InputForm>
-          {inputFormErrors.passwordError.map((el) => (
-            <p key={el}>{el}</p>
-          ))}
-        </div>
-        <ButtonCommon label="Login" onButtonClick={handleSubmit} />
-        <div className="text-black text-xs mt-4">
-          New here?
-          <Link className="px-1 hover:text-blue-400" href="/auth/sign-up">
-            Sign-up
-          </Link>
-          instead.
-        </div>
-        <div className="text-black text-xs mt-2">
-          Forgot password?
-          <Link
-            className="pl-1 hover:text-blue-400"
-            href="/auth/reset-password"
-          >
-            Reset
-          </Link>
-          .
-        </div>
-
+        .
       </div>
     </>
   );

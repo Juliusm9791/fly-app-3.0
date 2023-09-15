@@ -1,27 +1,20 @@
 'use client';
 import ButtonCommon from '@/common/input/button';
 import InputForm from '@/common/input/input-form';
-import React, { useCallback, useState } from 'react';
+import { signIn } from 'next-auth/react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import {
-  emailValidation,
-  passwordValidation,
-} from '@/common/utils/validations';
-import { LoginForm } from '@/common/variable-types';
-interface LoginError {
-  emailError: string;
-  passwordError: string[];
-}
+import { emailValidation } from '@/common/utils/validations';
+import { LoginError, LoginForm } from '@/common/variable-types';
+import { useRouter } from 'next/navigation';
+import { defaultLoginVal, defaultLoginErrorVal } from '../auth-default-values';
 
 export default function LoginPage() {
-  const [inputForm, setInputForm] = useState<LoginForm>({
-    email: '',
-    password: '',
-  });
-  const [inputFormErrors, setInputFormErrors] = useState<LoginError>({
-    emailError: '',
-    passwordError: [],
-  });
+  const router = useRouter();
+  const [inputForm, setInputForm] = useState<LoginForm>(defaultLoginVal);
+  const [inputFormErrors, setInputFormErrors] =
+    useState<LoginError>(defaultLoginErrorVal);
+  const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
   const handleInputFormChange = useCallback((value: string, name: string) => {
     setInputForm((prevForm: LoginForm) => ({
@@ -32,8 +25,6 @@ export default function LoginPage() {
   // console.log(inputForm);
 
   const handleSubmit = () => {
-    const passwordErrors: string[] = passwordValidation(inputForm.password);
-
     if (!emailValidation(inputForm.email)) {
       setInputFormErrors((prev) => ({
         ...prev,
@@ -45,14 +36,47 @@ export default function LoginPage() {
         emailError: '',
       }));
     }
-    if (passwordErrors.length !== 0) {
-      console.log(passwordErrors);
-      setInputFormErrors((prev) => ({
-        ...prev,
-        passwordError: passwordErrors,
-      }));
-    }
+    setIsFormSubmitted(true);
   };
+
+  useEffect(() => {
+    if (isFormSubmitted) {
+      if (
+        inputFormErrors.emailError === '' &&
+        inputFormErrors.passwordError.length === 0
+      ) {
+        signIn(
+          'credentials',
+          {
+            email: inputForm.email,
+            password: inputForm.password,
+            redirect: false,
+          },
+          { prompt: 'login' },
+        )
+          .then((res) => {
+            console.log(res);
+            if (res?.ok) {
+              router.push('/profile');
+            } else {
+              setInputFormErrors((prev) =>
+                res?.error
+                  ? {
+                      ...prev,
+                      emailError: res?.error,
+                    }
+                  : {
+                      ...prev,
+                      emailError: 'Login error, try again later',
+                    },
+              );
+            }
+          })
+          .catch((er) => console.log(er));
+      }
+      setIsFormSubmitted(false);
+    }
+  }, [isFormSubmitted, inputForm, inputFormErrors]);
 
   return (
     <>
@@ -73,10 +97,8 @@ export default function LoginPage() {
           value={inputForm.password}
           onChange={handleInputFormChange}
           placeholder="Password"
+          error={inputFormErrors.passwordError}
         ></InputForm>
-        {inputFormErrors.passwordError.map((el) => (
-          <p key={el}>{el}</p>
-        ))}
       </div>
       <ButtonCommon label="Login" onButtonClick={handleSubmit} />
       <div className="text-black text-xs mt-4">

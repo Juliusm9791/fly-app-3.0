@@ -21,38 +21,33 @@ export const authOptions = {
       async authorize(credentials: any, req: any) {
         try {
           let response: any = null;
-          switch (req.query.prompt) {
-            case 'login':
-              response = await signInWithEmailAndPassword(
-                auth,
-                credentials.email,
-                credentials.password,
-              );
-              const userData = await auth.currentUser?.getIdTokenResult(true);
-              if (userData?.claims.email_verified) {
-                break;
-              }
+          if (req.query.prompt === 'login') {
+            response = await signInWithEmailAndPassword(
+              auth,
+              credentials.email,
+              credentials.password,
+            );
+            const userData = await auth.currentUser?.getIdTokenResult(true);
+            if (!userData?.claims.email_verified) {
               await sendEmailVerification(response.user);
               await signOut(auth);
-              throw new Error('EMAIL NOT VERIFIED');
-
-            case 'signup':
-              response = await createUserWithEmailAndPassword(
-                auth,
-                credentials.email,
-                credentials.password,
-              );
-              await sendEmailVerification(response.user);
-              await signOut(auth);
-              response = null;
-              throw 'EMAIL VERIFICATION SENT';
-
-            default:
-              break;
+              throw new Error('EMAIL NOT VERIFIED, EMAIL VERIFICATION SENT');
+            }
+          }
+          if (req.query.prompt === 'signup') {
+            response = await createUserWithEmailAndPassword(
+              auth,
+              credentials.email,
+              credentials.password,
+            );
+            await sendEmailVerification(response.user);
+            await signOut(auth);
+            response = null;
+            throw new Error('EMAIL VERIFICATION SENT');
           }
 
-          if (response.user) {
-            return response.user;
+          if (response) {
+            return response;
           }
           return null;
         } catch (error: any) {
@@ -75,9 +70,10 @@ export const authOptions = {
 
   callbacks: {
     session({ session, token }: any) {
+      console.log('session token ', token);
       if (session?.user) {
-        session.user.uid = token.user.uid;
-        session.user.emailVerified = token.user.emailVerified;
+        session.user.uid = 'token.user.uid';
+        session.user.emailVerified = 'token.user.emailVerified';
       }
       return session;
     },

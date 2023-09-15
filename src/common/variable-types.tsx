@@ -5,6 +5,15 @@ export interface LoginForm {
 export interface SignupForm extends LoginForm {
   passwordConfirm: string;
 }
+export interface LoginError {
+  emailError: string;
+  passwordError: string;
+}
+
+export interface SignupError extends LoginError {
+  passwordConfirmError: string;
+  passwordStringError: string[];
+}
 
 export interface UserProfile {
   auth_uid: string;

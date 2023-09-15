@@ -35,8 +35,9 @@ export default function InputForm({
         type={type}
         name={name}
         disabled={disabled}
+        error={error}
       />
-      <p className={`${error ? 'mt-0' : 'mt-6'} text-sm text-red-700`}>
+      <p className={`${error ? 'mt-0' : 'mt-5'} text-sm text-red-700`}>
         <span className={errorField}>{error}</span>
       </p>
     </label>

@@ -2,18 +2,26 @@
 import ButtonCommon from '@/common/input/button';
 import InputForm from '@/common/input/input-form';
 import { signIn } from 'next-auth/react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { SignupForm } from '@/common/variable-types';
+import { SignupError, SignupForm } from '@/common/variable-types';
 import Link from 'next/link';
+import {
+  emailValidation,
+  passwordValidation,
+} from '@/common/utils/validations';
+import {
+  defaultSignupVal,
+  defaultSignupErrorVal,
+} from '../auth-default-values';
 
-export default function signupPage() {
+export default function SignupPage() {
   const router = useRouter();
-  const [inputForm, setInputForm] = useState<SignupForm>({
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  });
+  const [inputForm, setInputForm] = useState<SignupForm>(defaultSignupVal);
+  const [inputFormErrors, setInputFormErrors] = useState<SignupError>(
+    defaultSignupErrorVal,
+  );
+  const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
   const handleInputFormChange = useCallback((value: string, name: string) => {
     setInputForm((prevForm: SignupForm) => ({
@@ -23,24 +31,72 @@ export default function signupPage() {
   }, []);
 
   const handleEmailSignIn = () => {
+    const passwordErrors: string[] = passwordValidation(inputForm.password);
     console.log(inputForm);
-    signIn(
-      'credentials',
-      {
-        email: inputForm.email,
-        password: inputForm.password,
-        redirect: false,
-      },
-      { prompt: 'signup' },
-    ).then((res) => {
-      console.log('signup ', res);
-      if (res?.ok) {
-        router.push('/auth/login');
-      } else {
-        console.log(res?.error);
-      }
-    });
+    if (!emailValidation(inputForm.email)) {
+      setInputFormErrors((prev) => ({
+        ...prev,
+        emailError: 'Email not valid',
+      }));
+      return;
+    } else {
+      setInputFormErrors((prev) => ({
+        ...prev,
+        emailError: '',
+      }));
+    }
+    if (passwordErrors.length !== 0) {
+      setInputFormErrors((prev) => ({
+        ...prev,
+        passwordStringError: passwordErrors,
+      }));
+      return;
+    } else {
+      setInputFormErrors((prev) => ({
+        ...prev,
+        passwordStringError: [],
+      }));
+    }
+    setIsFormSubmitted(true);
   };
+  useEffect(() => {
+    if (isFormSubmitted) {
+      if (
+        inputFormErrors.emailError === '' &&
+        inputFormErrors.passwordError.length === 0
+      ) {
+        signIn(
+          'credentials',
+          {
+            email: inputForm.email,
+            password: inputForm.password,
+            redirect: false,
+          },
+          { prompt: 'signup' },
+        )
+          .then((res) => {
+            console.log(res);
+            if (res?.ok) {
+              router.push('/profile');
+            } else {
+              setInputFormErrors((prev) =>
+                res?.error
+                  ? {
+                      ...prev,
+                      emailError: res?.error,
+                    }
+                  : {
+                      ...prev,
+                      emailError: 'Signup error, try again later',
+                    },
+              );
+            }
+          })
+          .catch((er) => console.log(er));
+      }
+      setIsFormSubmitted(false);
+    }
+  }, [isFormSubmitted, inputForm, inputFormErrors]);
 
   return (
     <>
@@ -52,6 +108,7 @@ export default function signupPage() {
           value={inputForm.email}
           onChange={handleInputFormChange}
           placeholder="E-mail"
+          error={inputFormErrors.emailError}
         ></InputForm>
         <InputForm
           label="Password"
@@ -60,6 +117,7 @@ export default function signupPage() {
           value={inputForm.password}
           onChange={handleInputFormChange}
           placeholder="Password"
+          error={inputFormErrors.emailError}
         ></InputForm>
         <InputForm
           label="Confirm Password"
@@ -68,7 +126,13 @@ export default function signupPage() {
           value={inputForm.passwordConfirm}
           onChange={handleInputFormChange}
           placeholder="Confirm password"
+          error={inputFormErrors.emailError}
         ></InputForm>
+        {inputFormErrors.passwordStringError.map((el) => (
+          <p key={el} className="text-sm text-red-700">
+            {el}
+          </p>
+        ))}
       </div>
       <ButtonCommon label="Submit" onButtonClick={handleEmailSignIn} />
       <div className="text-black text-xs mt-4">

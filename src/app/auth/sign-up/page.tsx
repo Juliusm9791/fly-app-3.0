@@ -145,27 +145,3 @@ export default function SignupPage() {
     </>
   );
 }
-
-// useEffect(() => {
-//   if (
-//     inputFormErrors.emailError === '' &&
-//     inputFormErrors.passwordError.length === 0
-//   ) {
-//     signIn(
-//       'credentials',
-//       {
-//         email: inputForm.email,
-//         password: inputForm.password,
-//         redirect: false,
-//       },
-//       { prompt: 'signup' },
-//     ).then((res) => {
-//       console.log('signup ', res);
-//       if (res?.ok) {
-//         router.push('/auth/login');
-//       } else {
-//         console.log(res?.error);
-//       }
-//     });
-//   }
-// }, [inputFormErrors]);

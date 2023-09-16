@@ -7,7 +7,7 @@ import { emailValidation } from '@/common/utils/validations';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/firebase-config';
 import { useRouter } from 'next/navigation';
-import { firebaseErrorMsgStringClean } from '@/common/utils/string-utils';
+import { firebaseErrorMsgResetClean } from '@/common/utils/string-utils';
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('');
@@ -27,7 +27,7 @@ export default function LoginPage() {
         alert('Password reset email sent successfully.');
         router.push('/auth/login');
       } catch (e: any) {
-        setEmailErrors(firebaseErrorMsgStringClean(e.code));
+        setEmailErrors(firebaseErrorMsgResetClean(e.code));
       }
     }
   };

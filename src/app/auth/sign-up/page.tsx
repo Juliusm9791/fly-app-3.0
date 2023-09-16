@@ -14,6 +14,7 @@ import {
   defaultSignupVal,
   defaultSignupErrorVal,
 } from '../auth-default-values';
+import { firebaseErrorMsgSignupClean } from '@/common/utils/string-utils';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function SignupPage() {
     if (!emailValidation(inputForm.email)) {
       setInputFormErrors((prev) => ({
         ...prev,
-        emailError: 'Email not valid',
+        emailError: 'Email not valid.',
       }));
       return;
     } else {
@@ -84,11 +85,11 @@ export default function SignupPage() {
                 res?.error
                   ? {
                       ...prev,
-                      emailError: res?.error,
+                      emailError: firebaseErrorMsgSignupClean(res?.error),
                     }
                   : {
                       ...prev,
-                      emailError: 'Signup error, try again later',
+                      emailError: 'Signup error, try again later.',
                     },
               );
             }

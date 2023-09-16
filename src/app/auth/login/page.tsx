@@ -8,6 +8,7 @@ import { emailValidation } from '@/common/utils/validations';
 import { LoginError, LoginForm } from '@/common/variable-types';
 import { useRouter } from 'next/navigation';
 import { defaultLoginVal, defaultLoginErrorVal } from '../auth-default-values';
+import { firebaseErrorMsgSignupClean } from '@/common/utils/string-utils';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -59,17 +60,29 @@ export default function LoginPage() {
             if (res?.ok) {
               router.push('/profile');
             } else {
-              setInputFormErrors((prev) =>
-                res?.error
-                  ? {
-                      ...prev,
-                      emailError: res?.error,
-                    }
-                  : {
-                      ...prev,
-                      emailError: 'Login error, try again later',
-                    },
-              );
+              if (
+                res?.error?.includes(
+                  'EMAIL NOT VERIFIED. EMAIL VERIFICATION SENT',
+                )
+              ) {
+                alert(res?.error);
+              } else if (res?.error?.includes('auth/too-many-requests')) {
+                alert(
+                  firebaseErrorMsgSignupClean(res?.error) + ' Try again later',
+                );
+              } else {
+                setInputFormErrors((prev) =>
+                  res?.error
+                    ? {
+                        ...prev,
+                        emailError: firebaseErrorMsgSignupClean(res?.error),
+                      }
+                    : {
+                        ...prev,
+                        emailError: 'Login error, try again later',
+                      },
+                );
+              }
             }
           })
           .catch((er) => console.log(er));

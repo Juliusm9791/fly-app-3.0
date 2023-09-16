@@ -76,8 +76,9 @@ export default function SignupPage() {
         )
           .then((res) => {
             console.log(res);
-            if (res?.ok) {
-              router.push('/profile');
+            if (res?.error?.includes('EMAIL VERIFICATION SENT')) {
+              alert('EMAIL VERIFICATION SENT');
+              router.push('/auth/login');
             } else {
               setInputFormErrors((prev) =>
                 res?.error

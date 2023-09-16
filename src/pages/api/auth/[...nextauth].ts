@@ -21,33 +21,38 @@ export const authOptions = {
       async authorize(credentials: any, req: any) {
         try {
           let response: any = null;
-          if (req.query.prompt === 'login') {
-            response = await signInWithEmailAndPassword(
-              auth,
-              credentials.email,
-              credentials.password,
-            );
-            const userData = await auth.currentUser?.getIdTokenResult(true);
-            if (!userData?.claims.email_verified) {
+          switch (req.query.prompt) {
+            case 'login':
+              response = await signInWithEmailAndPassword(
+                auth,
+                credentials.email,
+                credentials.password,
+              );
+              const userData = await auth.currentUser?.getIdTokenResult(true);
+              if (userData?.claims.email_verified) {
+                break;
+              }
               await sendEmailVerification(response.user);
               await signOut(auth);
-              throw new Error('EMAIL NOT VERIFIED, EMAIL VERIFICATION SENT');
-            }
-          }
-          if (req.query.prompt === 'signup') {
-            response = await createUserWithEmailAndPassword(
-              auth,
-              credentials.email,
-              credentials.password,
-            );
-            await sendEmailVerification(response.user);
-            await signOut(auth);
-            response = null;
-            throw new Error('EMAIL VERIFICATION SENT');
+              throw new Error('EMAIL NOT VERIFIED');
+
+            case 'signup':
+              response = await createUserWithEmailAndPassword(
+                auth,
+                credentials.email,
+                credentials.password,
+              );
+              await sendEmailVerification(response.user);
+              await signOut(auth);
+              response = null;
+              throw 'EMAIL VERIFICATION SENT';
+
+            default:
+              break;
           }
 
-          if (response) {
-            return response;
+          if (response.user) {
+            return response.user;
           }
           return null;
         } catch (error: any) {
@@ -67,14 +72,22 @@ export const authOptions = {
     // verifyRequest: '/auth/verify-request', // (used for check email message)
     // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
   },
-
   callbacks: {
-    session({ session, token }: any) {
-      console.log('session token ', token);
-      if (session?.user) {
-        session.user.uid = 'token.user.uid';
-        session.user.emailVerified = 'token.user.emailVerified';
+    async jwt({ token, account, profile }: any) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        console.log(account);
+        // token.accessToken = account.access_token;
+        // token.id = profile.id;
       }
+      return token;
+    },
+    async session({ session, token, user }: any) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      // session.accessToken = token.accessToken
+      // session.user.id = token.id
+      console.log('SS ', session);
+      console.log('TT ', token);
       return session;
     },
   },

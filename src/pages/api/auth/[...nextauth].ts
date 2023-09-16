@@ -20,41 +20,34 @@ export const authOptions = {
       },
       async authorize(credentials: any, req: any) {
         try {
-          let response: any = null;
           switch (req.query.prompt) {
             case 'login':
-              response = await signInWithEmailAndPassword(
+              const responseLogin: any = await signInWithEmailAndPassword(
                 auth,
                 credentials.email,
                 credentials.password,
               );
               const userData = await auth.currentUser?.getIdTokenResult(true);
               if (userData?.claims.email_verified) {
-                break;
+                return responseLogin.user;
               }
-              await sendEmailVerification(response.user);
+              await sendEmailVerification(responseLogin.user);
               await signOut(auth);
-              throw new Error('EMAIL NOT VERIFIED');
+              throw new Error('EMAIL NOT VERIFIED. EMAIL VERIFICATION SENT.');
 
             case 'signup':
-              response = await createUserWithEmailAndPassword(
+              const responseSignup: any = await createUserWithEmailAndPassword(
                 auth,
                 credentials.email,
                 credentials.password,
               );
-              await sendEmailVerification(response.user);
+              await sendEmailVerification(responseSignup.user);
               await signOut(auth);
-              response = null;
-              throw 'EMAIL VERIFICATION SENT';
+              throw new Error('EMAIL VERIFICATION SENT');
 
             default:
-              break;
+              return null;
           }
-
-          if (response.user) {
-            return response.user;
-          }
-          return null;
         } catch (error: any) {
           throw new Error(error);
         }
@@ -72,22 +65,23 @@ export const authOptions = {
     // verifyRequest: '/auth/verify-request', // (used for check email message)
     // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
   },
+  // callbacks: {
+  //   async session({ session, token, user }: any) {
+  //     const userData = await auth.currentUser?.getIdTokenResult(true);
+  //     if (userData) {
+  //       session.user_id = userData?.claims.user_id;
+  //       session.email_verified = userData?.claims.email_verified;
+  //       console.log('UD ', userData);
+  //     }
+
+  //     return session;
+  //   },
+
   callbacks: {
-    async jwt({ token, account, profile }: any) {
-      // Persist the OAuth access_token and or the user id to the token right after signin
-      if (account) {
-        console.log(account);
-        // token.accessToken = account.access_token;
-        // token.id = profile.id;
+    async session({ session, token }: any) {
+      if (session?.user) {
+        session.user.uid = token.jti;
       }
-      return token;
-    },
-    async session({ session, token, user }: any) {
-      // Send properties to the client, like an access_token and user id from a provider.
-      // session.accessToken = token.accessToken
-      // session.user.id = token.id
-      console.log('SS ', session);
-      console.log('TT ', token);
       return session;
     },
   },

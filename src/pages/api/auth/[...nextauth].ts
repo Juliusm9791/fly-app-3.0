@@ -43,7 +43,7 @@ export const authOptions = {
               );
               await sendEmailVerification(responseSignup.user);
               await signOut(auth);
-              throw new Error('EMAIL VERIFICATION SENT');
+              throw new Error('EMAIL VERIFICATION SENT.');
 
             default:
               return null;
@@ -64,26 +64,6 @@ export const authOptions = {
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // (used for check email message)
     // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
-  },
-  // callbacks: {
-  //   async session({ session, token, user }: any) {
-  //     const userData = await auth.currentUser?.getIdTokenResult(true);
-  //     if (userData) {
-  //       session.user_id = userData?.claims.user_id;
-  //       session.email_verified = userData?.claims.email_verified;
-  //       console.log('UD ', userData);
-  //     }
-
-  //     return session;
-  //   },
-
-  callbacks: {
-    async session({ session, token }: any) {
-      if (session?.user) {
-        session.user.uid = token.jti;
-      }
-      return session;
-    },
   },
 };
 

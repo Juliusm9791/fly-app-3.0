@@ -8,7 +8,7 @@ export const defaultSignupErrorVal = {
   emailError: '',
   passwordError: '',
   passwordConfirmError: '',
-  passwordStringError: [],
+  passwordArrayError: [],
 };
 
 export const defaultLoginVal = {

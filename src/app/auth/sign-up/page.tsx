@@ -1,5 +1,4 @@
 'use client';
-import ButtonCommon from '@/common/input/button';
 import InputForm from '@/common/input/input-form';
 import { signIn } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -15,6 +14,7 @@ import {
   defaultSignupErrorVal,
 } from '../auth-default-values';
 import { firebaseErrorMsgSignupClean } from '@/common/utils/string-utils';
+import ButtonSubmit from '@/common/input/button-submit';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -31,7 +31,8 @@ export default function SignupPage() {
     }));
   }, []);
 
-  const handleEmailSignIn = () => {
+  const handleEmailSignIn = (event: any) => {
+    event.preventDefault();
     const passwordErrors: string[] = passwordValidation(inputForm.password);
     console.log(inputForm);
     if (!emailValidation(inputForm.email)) {
@@ -49,22 +50,36 @@ export default function SignupPage() {
     if (passwordErrors.length !== 0) {
       setInputFormErrors((prev) => ({
         ...prev,
-        passwordStringError: passwordErrors,
+        passwordArrayError: passwordErrors,
       }));
       return;
     } else {
       setInputFormErrors((prev) => ({
         ...prev,
-        passwordStringError: [],
+        passwordArrayError: [],
       }));
     }
+    if (inputForm.password !== inputForm.passwordConfirm) {
+      setInputFormErrors((prev) => ({
+        ...prev,
+        passwordConfirmError: 'Passwords do not match.',
+      }));
+      return;
+    } else {
+      setInputFormErrors((prev) => ({
+        ...prev,
+        passwordConfirmError: '',
+      }));
+    }
+
     setIsFormSubmitted(true);
   };
+
   useEffect(() => {
     if (isFormSubmitted) {
       if (
         inputFormErrors.emailError === '' &&
-        inputFormErrors.passwordError.length === 0
+        inputFormErrors.passwordArrayError.length === 0
       ) {
         signIn(
           'credentials',
@@ -102,7 +117,7 @@ export default function SignupPage() {
 
   return (
     <>
-      <div>
+      <form className="flex flex-col" onSubmit={handleEmailSignIn}>
         <InputForm
           label="E-mail"
           name="email"
@@ -119,7 +134,7 @@ export default function SignupPage() {
           value={inputForm.password}
           onChange={handleInputFormChange}
           placeholder="Password"
-          error={inputFormErrors.emailError}
+          error={inputFormErrors.passwordArrayError[0] && ' '}
         ></InputForm>
         <InputForm
           label="Confirm Password"
@@ -128,15 +143,19 @@ export default function SignupPage() {
           value={inputForm.passwordConfirm}
           onChange={handleInputFormChange}
           placeholder="Confirm password"
-          error={inputFormErrors.emailError}
+          error={inputFormErrors.passwordConfirmError}
         ></InputForm>
-        {inputFormErrors.passwordStringError.map((el) => (
-          <p key={el} className="text-sm text-red-700">
-            {el}
-          </p>
-        ))}
-      </div>
-      <ButtonCommon label="Submit" onButtonClick={handleEmailSignIn} />
+        <div>
+          {inputFormErrors.passwordArrayError.map((el) => (
+            <p key={el} className="text-sm text-red-700">
+              {el}
+            </p>
+          ))}
+        </div>
+        <div className="flex flex-col items-center">
+          <ButtonSubmit label="Submit" />
+        </div>
+      </form>
       <div className="text-black text-xs mt-4">
         Back to
         <Link className="pl-1 hover:text-blue-400" href="/auth/login">

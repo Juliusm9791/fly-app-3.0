@@ -1,5 +1,4 @@
 'use client';
-import ButtonCommon from '@/common/input/button';
 import InputForm from '@/common/input/input-form';
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
@@ -8,6 +7,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/firebase-config';
 import { useRouter } from 'next/navigation';
 import { firebaseErrorMsgResetClean } from '@/common/utils/string-utils';
+import ButtonSubmit from '@/common/input/button-submit';
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('');
@@ -17,7 +17,8 @@ export default function LoginPage() {
     setEmail(value);
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
     if (!emailValidation(email)) {
       setEmailErrors('Email address is not valid.');
     } else {
@@ -34,7 +35,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <div>
+      <form className="flex flex-col items-center" onSubmit={handleSubmit}>
         <InputForm
           label="E-mail"
           name="email"
@@ -44,12 +45,8 @@ export default function LoginPage() {
           placeholder="E-mail"
           error={emailError}
         ></InputForm>
-      </div>
-      <ButtonCommon
-        label="Reset Password"
-        onButtonClick={handleSubmit}
-        // disabled={!emailValidation(email)}
-      />
+        <ButtonSubmit label="Reset Password" />
+      </form>
       <div className="text-black text-xs mt-4">
         Back to
         <Link className="pl-1 hover:text-blue-400" href="/auth/login">

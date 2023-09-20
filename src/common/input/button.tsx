@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-interface Props {
+interface PropsCommon {
   label: string;
   onButtonClick?: () => void;
   disabled?: boolean;
@@ -10,7 +10,7 @@ export default function ButtonCommon({
   label,
   onButtonClick,
   disabled,
-}: Props) {
+}: PropsCommon) {
   return (
     <div className="mt-4">
       <button

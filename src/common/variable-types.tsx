@@ -12,7 +12,7 @@ export interface LoginError {
 
 export interface SignupError extends LoginError {
   passwordConfirmError: string;
-  passwordStringError: string[];
+  passwordArrayError: string[];
 }
 
 export interface UserProfile {

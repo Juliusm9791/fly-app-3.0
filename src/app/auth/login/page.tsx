@@ -1,5 +1,5 @@
 'use client';
-import ButtonCommon from '@/common/input/button';
+import ButtonSubmit from '@/common/input/button-submit';
 import InputForm from '@/common/input/input-form';
 import { signIn } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -8,7 +8,10 @@ import { emailValidation } from '@/common/utils/validations';
 import { LoginError, LoginForm } from '@/common/variable-types';
 import { useRouter } from 'next/navigation';
 import { defaultLoginVal, defaultLoginErrorVal } from '../auth-default-values';
-import { firebaseErrorMsgSignupClean } from '@/common/utils/string-utils';
+import {
+  firebaseErrorMsgSignupClean,
+  sortingMsgforEmailOrPasw,
+} from '@/common/utils/string-utils';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,13 +26,13 @@ export default function LoginPage() {
       [name]: value,
     }));
   }, []);
-  // console.log(inputForm);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
     if (!emailValidation(inputForm.email)) {
       setInputFormErrors((prev) => ({
         ...prev,
-        emailError: 'Email not valid',
+        emailError: 'Email not valid.',
       }));
     } else {
       setInputFormErrors((prev) => ({
@@ -42,10 +45,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isFormSubmitted) {
-      if (
-        inputFormErrors.emailError === '' &&
-        inputFormErrors.passwordError.length === 0
-      ) {
+      if (inputFormErrors.emailError === '') {
         signIn(
           'credentials',
           {
@@ -56,33 +56,21 @@ export default function LoginPage() {
           { prompt: 'login' },
         )
           .then((res) => {
-            console.log(res);
             if (res?.ok) {
               router.push('/profile');
-            } else {
-              if (
-                res?.error?.includes(
-                  'EMAIL NOT VERIFIED. EMAIL VERIFICATION SENT',
-                )
-              ) {
+            } else if (res?.error) {
+              if (res?.error?.includes('EMAIL NOT VERIFIED')) {
                 alert(res?.error);
               } else if (res?.error?.includes('auth/too-many-requests')) {
                 alert(
-                  firebaseErrorMsgSignupClean(res?.error) + ' Try again later',
+                  firebaseErrorMsgSignupClean(res?.error) + ' Try again later.',
                 );
               } else {
-                setInputFormErrors((prev) =>
-                  res?.error
-                    ? {
-                        ...prev,
-                        emailError: firebaseErrorMsgSignupClean(res?.error),
-                      }
-                    : {
-                        ...prev,
-                        emailError: 'Login error, try again later',
-                      },
-                );
+                setInputFormErrors(sortingMsgforEmailOrPasw(res?.error));
               }
+            } else {
+              alert('Login error, try again later.');
+              return defaultLoginErrorVal;
             }
           })
           .catch((er) => console.log(er));
@@ -93,7 +81,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <div>
+      <form className="flex flex-col items-center" onSubmit={handleSubmit}>
         <InputForm
           label="E-mail"
           name="email"
@@ -112,8 +100,8 @@ export default function LoginPage() {
           placeholder="Password"
           error={inputFormErrors.passwordError}
         ></InputForm>
-      </div>
-      <ButtonCommon label="Login" onButtonClick={handleSubmit} />
+        <ButtonSubmit label="Login" />
+      </form>
       <div className="text-black text-xs mt-4">
         New here?
         <Link className="px-1 hover:text-blue-400" href="/auth/sign-up">

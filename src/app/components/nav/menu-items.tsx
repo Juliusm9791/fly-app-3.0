@@ -26,7 +26,7 @@ export const menuItems = [
   {
     id: 2,
     name: 'Profile',
-    link: '/profile',
+    link: '/profile/dash',
     icon: (selectedColor: string | null) => {
       return (
         <UserIcon
@@ -51,7 +51,6 @@ export const menuItems = [
         />
       );
     },
-
   },
   {
     id: 4,
@@ -66,7 +65,6 @@ export const menuItems = [
         />
       );
     },
-
   },
   {
     id: 5,

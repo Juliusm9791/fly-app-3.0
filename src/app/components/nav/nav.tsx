@@ -27,7 +27,7 @@ export default function Nav() {
             className="flex sm:items-center sm:p-4 max-sm:justify-around max-sm:w-full max-sm:pt-1"
             href={menu.link}
           >
-            <div className="flex items-center">
+            <div className="flex items-center mt-2 max-sm:mt-0">
               {menu.icon(
                 path?.includes(menu.link) ? colors.iconSelectedColor : null,
               )}

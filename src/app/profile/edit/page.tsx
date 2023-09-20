@@ -1,15 +1,14 @@
 'use client';
 import React, { useCallback, useState } from 'react';
-import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '@/firebase-config';
 import InputForm from '@/common/input/input-form';
 import ButtonCommon from '@/common/input/button';
 import { UserProfile } from '@/common/variable-types';
-import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
-export default function ProfilePage() {
+export default function ProfileEdit() {
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
@@ -30,15 +29,6 @@ export default function ProfilePage() {
     emailVerified: session?.user?.emailVerified || false,
   });
 
-  const handleSignOut = () => {
-    try {
-      signOut();
-      console.log('Sign-out successful.');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleProfileInput = useCallback((value: string, name: string) => {
     setUserProfile((prevForm: UserProfile) => ({
       ...prevForm,
@@ -53,7 +43,7 @@ export default function ProfilePage() {
         email: userProfile.email,
         firstName: userProfile.firstName,
         middleName: '',
-        lastName: '',
+        lastName: userProfile.firstName,
         avatar: '',
         address: '',
         phone: '',
@@ -68,33 +58,50 @@ export default function ProfilePage() {
 
   return (
     <>
-      <div>Profile Page</div>
-      <p>
-        Signed in as: <i> {userProfile.email} </i>
-      </p>
-      <br />
-      <p>
-        UID: <i>{userProfile.auth_uid}</i>
-      </p>
-      <br />
-      <p>
-        emailVerified: <i>{userProfile.emailVerified && 'TRUE'}</i>
-      </p>
-      <br />
+      <div>Edit Profile</div>
 
-      <button onClick={handleSignOut}>Sign out</button>
+      <div className="p-10 flex flex-col bg-gray-100 rounded mt-20">
+        <InputForm
+          label="Email"
+          value={userProfile.email}
+          name="Email"
+          onChange={handleProfileInput}
+        ></InputForm>
 
-      <InputForm
-        label="Name"
-        value={userProfile.firstName}
-        name="firstName"
-        onChange={handleProfileInput}
-      ></InputForm>
-      <ButtonCommon
-        label="Update Profile"
-        onButtonClick={handleSubmitProfile}
-      ></ButtonCommon>
+        <InputForm
+          label="First Name"
+          value={userProfile.firstName}
+          name="firstName"
+          onChange={handleProfileInput}
+        ></InputForm>
+
+        <InputForm
+          label="Last Name"
+          value={userProfile.lastName}
+          name="lastName"
+          onChange={handleProfileInput}
+        ></InputForm>
+
+        <InputForm
+          label="Address"
+          value={userProfile.address}
+          name="address"
+          onChange={handleProfileInput}
+        ></InputForm>
+
+        <InputForm
+          label="Phone"
+          value={userProfile.phone}
+          name="phone"
+          onChange={handleProfileInput}
+        ></InputForm>
+
+        <ButtonCommon
+          label="Save"
+          onButtonClick={handleSubmitProfile}
+        ></ButtonCommon>
+      </div>
     </>
   );
 }
-ProfilePage.requireAuth = true;
+ProfileEdit.requireAuth = true;

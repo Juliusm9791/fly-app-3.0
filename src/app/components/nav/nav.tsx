@@ -20,7 +20,7 @@ export default function Nav() {
         />
       </Link>
 
-      <div className="relative flex flex-col w-full border-t border-gray-700 pl-1 max-sm:mt-4  max-sm:flex-row max-sm:border-none">
+      <div className="relative flex flex-col w-full border-t border-gray-700 pl-1 max-sm:mt-4  max-sm:flex-row max-sm:border-none max-sm:bottom-0">
         {menuItems.map((menu) => (
           <Link
             key={menu.id}

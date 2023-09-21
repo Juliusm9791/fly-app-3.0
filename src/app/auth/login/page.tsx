@@ -57,7 +57,7 @@ export default function LoginPage() {
         )
           .then((res) => {
             if (res?.ok) {
-              router.push('/profile');
+              router.push('/profile/dash');
             } else if (res?.error) {
               if (res?.error?.includes('EMAIL NOT VERIFIED')) {
                 alert(res?.error);

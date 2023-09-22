@@ -1,4 +1,6 @@
 'use client';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ButtonSubmit from '@/common/input/button-submit';
 import InputForm from '@/common/input/input-form';
 import { signIn } from 'next-auth/react';
@@ -60,16 +62,16 @@ export default function LoginPage() {
               router.push('/profile/dash');
             } else if (res?.error) {
               if (res?.error?.includes('EMAIL NOT VERIFIED')) {
-                alert(res?.error);
+                toast.error(res?.error);
               } else if (res?.error?.includes('auth/too-many-requests')) {
-                alert(
+                toast.info(
                   firebaseErrorMsgSignupClean(res?.error) + ' Try again later.',
                 );
               } else {
                 setInputFormErrors(sortingMsgforEmailOrPasw(res?.error));
               }
             } else {
-              alert('Login error, try again later.');
+              toast.error('Login error, try again later.');
               return defaultLoginErrorVal;
             }
           })
@@ -116,6 +118,7 @@ export default function LoginPage() {
         </Link>
         .
       </div>
+      <ToastContainer autoClose={2000} />
     </>
   );
 }

@@ -1,4 +1,6 @@
 'use client';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import InputForm from '@/common/input/input-form';
 import { signIn } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -93,8 +95,11 @@ export default function SignupPage() {
           .then((res) => {
             console.log(res);
             if (res?.error?.includes('EMAIL VERIFICATION SENT')) {
-              alert('EMAIL VERIFICATION SENT');
-              router.push('/auth/login');
+              toast.success('EMAIL VERIFICATION SENT', {
+                onClose: () => {
+                  router.push('/auth/login');
+                },
+              });
             } else {
               setInputFormErrors((prev) =>
                 res?.error
@@ -163,6 +168,7 @@ export default function SignupPage() {
         </Link>
         .
       </div>
+      <ToastContainer autoClose={2000} />
     </>
   );
 }

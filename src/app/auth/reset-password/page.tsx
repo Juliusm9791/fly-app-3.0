@@ -1,4 +1,6 @@
 'use client';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import InputForm from '@/common/input/input-form';
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
@@ -25,8 +27,11 @@ export default function LoginPage() {
       try {
         await sendPasswordResetEmail(auth, email);
         setEmailErrors('');
-        alert('Password reset email sent successfully.');
-        router.push('/auth/login');
+        toast.success('Password reset email sent successfully.', {
+          onClose: () => {
+            router.push('/auth/login');
+          },
+        });
       } catch (e: any) {
         setEmailErrors(firebaseErrorMsgResetClean(e.code));
       }
@@ -54,6 +59,7 @@ export default function LoginPage() {
         </Link>
         .
       </div>
+      <ToastContainer autoClose={2000} />
     </>
   );
 }

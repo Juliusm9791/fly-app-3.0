@@ -1,11 +1,7 @@
 'use client';
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '@/firebase-config';
-import InputForm from '@/common/input/input-form';
-import ButtonCommon from '@/common/input/button';
 import { UserProfile } from '@/common/variable-types';
 import Link from 'next/link';
 import {
@@ -15,6 +11,10 @@ import {
   WatchlistIcon,
   WishlistIcon,
 } from '@/common/icons';
+import { defaultProfileVal } from '../profile-default-values';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/firebase-config';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function ProfileDash() {
   const { status, data: session } = useSession({
@@ -23,19 +23,33 @@ export default function ProfileDash() {
       redirect('/auth/login');
     },
   });
-  const usersCollectionRef = collection(db, 'users');
-  const [userProfile, setUserProfile] = useState<UserProfile>({
-    auth_uid: session?.user?.uid || '',
-    role: '',
-    email: session?.user?.email || '',
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    avatar: '',
-    address: '',
-    phone: '',
-    emailVerified: session?.user?.emailVerified || false,
-  });
+  const [userProfile, setUserProfile] =
+    useState<UserProfile>(defaultProfileVal);
+
+  useEffect(() => {
+    (async function getUserData() {
+      if (session?.user.uid) {
+        const docRef = doc(db, 'users', session?.user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log('Document data:', docSnap.data());
+          setUserProfile({
+            role: docSnap.data().role,
+            email: docSnap.data().email,
+            firstName: docSnap.data().firstName,
+            middleName: docSnap.data().middleName,
+            lastName: docSnap.data().lastName,
+            avatar: docSnap.data().avatar,
+            address: docSnap.data().address,
+            phone: docSnap.data().phone,
+          });
+        } else {
+          console.error('No such document!');
+        }
+      } else toast.error('User data not found');
+    })();
+  }, []);
 
   const handleSignOut = () => {
     try {
@@ -154,6 +168,7 @@ export default function ProfileDash() {
           </div>
         </div>
       )}
+      <ToastContainer autoClose={2000} />
     </>
   );
 }

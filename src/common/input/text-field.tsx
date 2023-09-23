@@ -5,6 +5,8 @@ export type Props = {
   name?: string;
   type?: string;
   placeholder?: string;
+  disabled?: boolean;
+  error?: string;
   onChange: (value: string, name: string) => void;
 };
 
@@ -13,6 +15,8 @@ export default function TextField({
   name,
   type,
   placeholder,
+  disabled,
+  error,
   onChange,
 }: Props) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,12 +28,15 @@ export default function TextField({
   return (
     <div>
       <input
+        disabled={disabled}
         name={name}
         type={type || 'text'}
         value={value}
         onChange={handleInputChange}
         placeholder={placeholder}
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        className={`mt-1 block w-full rounded ${
+          error ? 'border-red-700' : 'border-gray-300'
+        } shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50`}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 'use client';
-import ButtonCommon from '@/common/input/button';
+import { ToastContainer, toast } from 'react-toastify';
 import InputForm from '@/common/input/input-form';
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
@@ -7,7 +7,8 @@ import { emailValidation } from '@/common/utils/validations';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/firebase-config';
 import { useRouter } from 'next/navigation';
-import { firebaseErrorMsgStringClean } from '@/common/utils/string-utils';
+import { firebaseErrorMsgResetClean } from '@/common/utils/string-utils';
+import ButtonSubmit from '@/common/input/button-submit';
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('');
@@ -17,45 +18,47 @@ export default function LoginPage() {
     setEmail(value);
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
     if (!emailValidation(email)) {
       setEmailErrors('Email address is not valid.');
     } else {
       try {
         await sendPasswordResetEmail(auth, email);
         setEmailErrors('');
-        alert('Password reset email sent successfully.');
-        router.push('/auth/login');
+        toast.success('Password reset email sent successfully.', {
+          onClose: () => {
+            router.push('/auth/login');
+          },
+        });
       } catch (e: any) {
-        setEmailErrors(firebaseErrorMsgStringClean(e.code));
+        setEmailErrors(firebaseErrorMsgResetClean(e.code));
       }
     }
   };
 
   return (
     <>
-      <div>
+      <form className="flex flex-col items-center" onSubmit={handleSubmit}>
         <InputForm
           label="E-mail"
           name="email"
           type="email"
           value={email}
           onChange={handleInputChange}
-          placeholder="email"
+          placeholder="E-mail"
           error={emailError}
         ></InputForm>
-      </div>
-      <ButtonCommon
-        label="Reset Password"
-        onButtonClick={handleSubmit}
-        // disabled={!emailValidation(email)}
-      />
+        <ButtonSubmit label="Reset Password" />
+      </form>
       <div className="text-black text-xs mt-4">
         Back to
-        <Link className="px-1 hover:text-blue-400" href="/auth/login">
-          Login.
+        <Link className="pl-1 hover:text-blue-400" href="/auth/login">
+          Login
         </Link>
+        .
       </div>
+      <ToastContainer autoClose={2000} />
     </>
   );
 }

@@ -1,23 +1,25 @@
 'use client';
-import ButtonCommon from '@/common/input/button';
+import { ToastContainer, toast } from 'react-toastify';
+import ButtonSubmit from '@/common/input/button-submit';
 import InputForm from '@/common/input/input-form';
-import React, { useCallback, useState } from 'react';
+import { signIn } from 'next-auth/react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { emailValidation } from '@/common/utils/validations';
+import { LoginError, LoginForm } from '@/common/variable-types';
+import { useRouter } from 'next/navigation';
+import { defaultLoginVal, defaultLoginErrorVal } from '../auth-default-values';
 import {
-  emailValidation,
-  passwordValidation,
-} from '@/common/utils/validations';
-import { LoginForm } from '@/common/variable-types';
+  firebaseErrorMsgSignupClean,
+  sortingMsgforEmailOrPasw,
+} from '@/common/utils/string-utils';
 
 export default function LoginPage() {
-  const [inputForm, setInputForm] = useState<LoginForm>({
-    email: '',
-    password: '',
-  });
-  const [inputFormErrors, setInputFormErrors] = useState({
-    emailError: '',
-    passwordError: '',
-  });
+  const router = useRouter();
+  const [inputForm, setInputForm] = useState<LoginForm>(defaultLoginVal);
+  const [inputFormErrors, setInputFormErrors] =
+    useState<LoginError>(defaultLoginErrorVal);
+  const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
   const handleInputFormChange = useCallback((value: string, name: string) => {
     setInputForm((prevForm: LoginForm) => ({
@@ -25,15 +27,13 @@ export default function LoginPage() {
       [name]: value,
     }));
   }, []);
-  // console.log(inputForm);
 
-  const handleSubmit = () => {
-    const passwordErrors: string[] = passwordValidation(inputForm.password);
-
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
     if (!emailValidation(inputForm.email)) {
       setInputFormErrors((prev) => ({
         ...prev,
-        emailError: 'Email not valid',
+        emailError: 'Email not valid.',
       }));
     } else {
       setInputFormErrors((prev) => ({
@@ -41,21 +41,55 @@ export default function LoginPage() {
         emailError: '',
       }));
     }
-    if (passwordErrors.length !== 0) {
-      console.log(passwordErrors);
-    }
+    setIsFormSubmitted(true);
   };
+
+  useEffect(() => {
+    if (isFormSubmitted) {
+      if (inputFormErrors.emailError === '') {
+        signIn(
+          'credentials',
+          {
+            email: inputForm.email,
+            password: inputForm.password,
+            redirect: false,
+          },
+          { prompt: 'login' },
+        )
+          .then((res) => {
+            if (res?.ok) {
+              router.push('/profile/dash');
+            } else if (res?.error) {
+              if (res?.error?.includes('EMAIL NOT VERIFIED')) {
+                toast.error(res?.error);
+              } else if (res?.error?.includes('auth/too-many-requests')) {
+                toast.info(
+                  firebaseErrorMsgSignupClean(res?.error) + ' Try again later.',
+                );
+              } else {
+                setInputFormErrors(sortingMsgforEmailOrPasw(res?.error));
+              }
+            } else {
+              toast.error('Login error, try again later.');
+              return defaultLoginErrorVal;
+            }
+          })
+          .catch((er) => console.log(er));
+      }
+      setIsFormSubmitted(false);
+    }
+  }, [isFormSubmitted, inputForm, inputFormErrors]);
 
   return (
     <>
-      <div>
+      <form className="flex flex-col items-center" onSubmit={handleSubmit}>
         <InputForm
           label="E-mail"
           name="email"
           type="email"
           value={inputForm.email}
           onChange={handleInputFormChange}
-          placeholder="email"
+          placeholder="E-mail"
           error={inputFormErrors.emailError}
         ></InputForm>
         <InputForm
@@ -64,11 +98,11 @@ export default function LoginPage() {
           type="password"
           value={inputForm.password}
           onChange={handleInputFormChange}
-          placeholder="password"
+          placeholder="Password"
           error={inputFormErrors.passwordError}
         ></InputForm>
-      </div>
-      <ButtonCommon label="Login" onButtonClick={handleSubmit} />
+        <ButtonSubmit label="Login" />
+      </form>
       <div className="text-black text-xs mt-4">
         New here?
         <Link className="px-1 hover:text-blue-400" href="/auth/sign-up">
@@ -76,12 +110,14 @@ export default function LoginPage() {
         </Link>
         instead.
       </div>
-      <div className="text-black text-xs mt-4">
+      <div className="text-black text-xs mt-2">
         Forgot password?
-        <Link className="px-1 hover:text-blue-400" href="/auth/reset-password">
+        <Link className="pl-1 hover:text-blue-400" href="/auth/reset-password">
           Reset
         </Link>
+        .
       </div>
+      <ToastContainer autoClose={2000} />
     </>
   );
 }

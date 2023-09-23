@@ -6,6 +6,8 @@ import Footer from './components/footer/footer';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../pages/api/auth/[...nextauth]';
 import SessionProvider from '@/session-provider';
+import Link from 'next/link';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,8 +23,21 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <main>
             <Nav />
-            <div className="pt-20 flex justify-center items-center">
-              {children}
+            <div>
+              <div className="flex flex-col justify-center items-center">
+                <Link
+                  className="flex items-center justify-center w-full sm:hidden"
+                  href="/"
+                >
+                  <img
+                    className="h-14 w-14"
+                    src="/icons/fly_icon.svg"
+                    alt="flyapp_logo"
+                  />
+                </Link>
+
+                {children}
+              </div>
             </div>
             <footer className="max-sm:hidden">
               <Footer />

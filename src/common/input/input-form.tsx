@@ -8,7 +8,9 @@ interface Props {
   value: string;
   name?: string;
   error?: string;
+  disabled?: boolean;
   placeholder?: string;
+
   onChange: (value: any, data?: any) => void;
 }
 
@@ -19,20 +21,27 @@ export default function InputForm({
   placeholder,
   name,
   error,
+  disabled,
   onChange,
 }: Props) {
   let errorField = `${error ? '' : 'mt-8'}`;
   return (
     <label className="block">
-      <p className="text-gray-700 text-left ">{label}</p>
+      <p className="text-gray-700 text-left">{label}</p>
       <TextField
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         type={type}
         name={name}
+        disabled={disabled}
+        error={error}
       />
-      <p className="text-sm text-red-700">
+      <p
+        className={`${
+          error && error !== ' ' ? 'mt-0' : 'mt-5'
+        } text-sm text-red-700`}
+      >
         <span className={errorField}>{error}</span>
       </p>
     </label>

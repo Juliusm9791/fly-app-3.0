@@ -28,15 +28,6 @@ export default function HomePage() {
     <main>
       <div className="flex justify-center items-center">
         {loading ? <p>Loading ...</p> : <p>{name.appName}</p>}
-
-        {/* <div className="">
-          <hr />
-          <br />
-          <Link href="/auth/signin-test">Sign In</Link>
-          <hr />
-          <br />
-          <Link href="/auth/login-test">Login</Link>
-        </div> */}
       </div>
     </main>
   );

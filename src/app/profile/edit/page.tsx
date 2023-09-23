@@ -1,13 +1,15 @@
 'use client';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { redirect } from 'next/navigation';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase-config';
 import InputForm from '@/common/input/input-form';
 import { UserProfile } from '@/common/variable-types';
 import { useSession } from 'next-auth/react';
 import ButtonSubmit from '@/common/input/button-submit';
 import { useRouter } from 'next/navigation';
+import { defaultProfileVal } from '../profile-default-values';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function ProfileEdit() {
   const router = useRouter();
@@ -18,18 +20,33 @@ export default function ProfileEdit() {
     },
   });
   const usersCollectionRef = collection(db, 'users');
-  const [userProfile, setUserProfile] = useState<UserProfile>({
-    auth_uid: session?.user?.uid || '',
-    role: '',
-    email: session?.user?.email || '',
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    avatar: '',
-    address: '',
-    phone: '',
-    emailVerified: session?.user?.emailVerified || false,
-  });
+  const [userProfile, setUserProfile] =
+    useState<UserProfile>(defaultProfileVal);
+
+  useEffect(() => {
+    (async function getUserData() {
+      if (session?.user.uid) {
+        const docRef = doc(db, 'users', session.user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log('Document data:', docSnap.data());
+          setUserProfile({
+            role: docSnap.data().role,
+            email: docSnap.data().email,
+            firstName: docSnap.data().firstName,
+            middleName: docSnap.data().middleName,
+            lastName: docSnap.data().lastName,
+            avatar: docSnap.data().avatar,
+            address: docSnap.data().address,
+            phone: docSnap.data().phone,
+          });
+        } else {
+          console.error('No such document!');
+        }
+      } else alert('User data not found');
+    })();
+  }, []);
 
   const handleProfileInput = useCallback((value: string, name: string) => {
     setUserProfile((prevForm: UserProfile) => ({
@@ -37,26 +54,27 @@ export default function ProfileEdit() {
       [name]: value,
     }));
   }, []);
-  const handleSubmitProfile = () => {
+
+  const handleSubmitProfile = async (event: any) => {
+    event.preventDefault();
     try {
-      const res = addDoc(usersCollectionRef, {
-        auth_uid: userProfile.email,
-        role: '',
-        email: userProfile.email,
-        firstName: userProfile.firstName,
-        middleName: '',
-        lastName: userProfile.lastName,
-        avatar: '',
-        address: userProfile.address,
-        phone: userProfile.phone,
-        emailVerified: userProfile.emailVerified,
+      if (session?.user.uid) {
+        const res = await updateDoc(doc(usersCollectionRef, session.user.uid), {
+          firstName: userProfile.firstName,
+          middleName: userProfile.middleName,
+          lastName: userProfile.lastName,
+          avatar: userProfile.avatar,
+          address: userProfile.address,
+          phone: userProfile.phone,
+        });
+      }
+      toast.success('User data updated successful.', {
+        onClose: () => {
+          router.push('/profile/dash');
+        },
       });
-      console.log(res);
-      console.log('Data added successful.');
     } catch (error) {
       console.error(error);
-    } finally {
-      router.push('/profile/dash');
     }
   };
 
@@ -107,6 +125,7 @@ export default function ProfileEdit() {
           <ButtonSubmit label="Save"></ButtonSubmit>
         </div>
       </form>
+      <ToastContainer autoClose={2000} />
     </>
   );
 }

@@ -16,7 +16,6 @@ export interface SignupError extends LoginError {
 }
 
 export interface UserProfile {
-  auth_uid: string;
   role: string;
   email: string;
   firstName: string;
@@ -25,5 +24,4 @@ export interface UserProfile {
   avatar: string;
   address: string;
   phone: string;
-  emailVerified: boolean;
 }

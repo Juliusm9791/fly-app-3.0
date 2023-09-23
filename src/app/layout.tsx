@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../pages/api/auth/[...nextauth]';
 import SessionProvider from '@/session-provider';
 import Link from 'next/link';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

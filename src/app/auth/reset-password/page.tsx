@@ -1,6 +1,5 @@
 'use client';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import InputForm from '@/common/input/input-form';
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
